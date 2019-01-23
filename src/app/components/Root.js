@@ -14,7 +14,7 @@ import Logout from "./Logout";
 class Root extends Component {
     render() {
         let authRoute;
-        if (!localStorage.getItem('phone-manager-user-token')) {
+        if (!localStorage.getItem('user-token')) {
             authRoute = false
         } else {
             authRoute = true

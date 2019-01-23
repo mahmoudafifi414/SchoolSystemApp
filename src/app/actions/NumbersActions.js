@@ -28,7 +28,7 @@ export const getContacts = data => dispatch => {
     );
 };
 export const getPosts = () => dispatch => {
-    axios.get('http://localhost:8000').then(res => {
+    axios.get('http://127.0.0.1:8000/api/posts').then(res => {
         dispatch({
             type: GET_POSTS,
             payload: res.data,
@@ -36,7 +36,7 @@ export const getPosts = () => dispatch => {
     })
 };
 export const deletePost = (id) => dispatch => {
-    axios.delete('http://localhost:8000/' + id).then(res => {
+    axios.delete('http://localhost:8000/posts' + id).then(res => {
         dispatch({
             type: DELETE_POST,
             payload: res.data.id,

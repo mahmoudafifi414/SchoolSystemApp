@@ -19,9 +19,9 @@ export default function (state = initialState, action) {
         case LOGIN:
             return {
                 ...state,
-                message: action.payload.message,
-                auth: action.payload.auth,
-                email: action.payload.email
+                message: action.payload.meta.message,
+                auth: action.payload.meta.auth,
+                email: action.payload.userData.email
             };
         case REGISTER:
             return {
