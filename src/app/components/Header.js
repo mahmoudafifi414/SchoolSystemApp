@@ -8,9 +8,7 @@ import {
     showHidePersonalDetails,
     showHideSearch
 } from "../actions/NumbersActions";
-import {
-    getAuthUserInfo
-} from "../actions/UserActions";
+import {getAuthUserInfo} from "../actions/UserActions";
 
 class Header extends Component {
     componentDidMount = () => {
@@ -59,12 +57,9 @@ class Header extends Component {
 
     render() {
         let nav;
-        let auth = localStorage.getItem('phone-manager-user-token') ? 'yes' : 'no'
+        let auth = localStorage.getItem('user-token') ? 'yes' : 'no'
         const {authUserInfo} = this.props.userReducer;
-        /*console.log(authUserInfo);*/
-        const loginOrAuth = localStorage.getItem('phone-manager-user-token') ?
-            (authUserInfo.hasOwnProperty('first_name') != null ? authUserInfo.first_name + ' ' + authUserInfo.last_name : authUserInfo.email)
-            : 'login'
+        const userNameOrEmail = authUserInfo.hasOwnProperty('name') ? authUserInfo.name : authUserInfo.email
         if (auth == 'yes') {
             nav = <Nav pullRight>
                 <NavItem onClick={this.showHideForm}>
@@ -73,7 +68,7 @@ class Header extends Component {
                 <NavItem onClick={this.showHideChatList}>
                     Inbox
                 </NavItem>
-                <NavDropdown eventKey={3} title={loginOrAuth} id="basic-nav-dropdown">
+                <NavDropdown eventKey={3} title={userNameOrEmail} id="basic-nav-dropdown">
                     <MenuItem href='/logout'>Logout</MenuItem>
                     <MenuItem href='/personal-details'>Personal Details</MenuItem>
                 </NavDropdown>
@@ -111,5 +106,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {showHideContacts, showHideForm, showHideSearch, showHidePersonalDetails, showHideChatList,getAuthUserInfo}
+    {showHideContacts, showHideForm, showHideSearch, showHidePersonalDetails, showHideChatList, getAuthUserInfo}
 )(Header);

@@ -3,7 +3,7 @@ import {GET_AUTH_USER_INFO, LOGIN, LOGOUT, REGISTER, UPDATE_AUTH_USER_INFO} from
 
 export const loginAction = loginInfo => dispatch => {
     axios.post('http://127.0.0.1:8000/api/login', loginInfo).then((res) => {
-        console.log(res.data.meta.message)
+        //console.log(res.data.userData)
             if (res.data.hasOwnProperty('access_token')) {
                 localStorage.setItem('user-id', res.data.userData.id)
                 localStorage.setItem('user-token', res.data.access_token)

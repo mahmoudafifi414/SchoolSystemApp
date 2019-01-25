@@ -1,10 +1,4 @@
-import {
-    LOGIN,
-    REGISTER,
-    LOGOUT,
-    UPDATE_AUTH_USER_INFO,
-    GET_AUTH_USER_INFO
-} from '../actions/types';
+import {GET_AUTH_USER_INFO, LOGIN, LOGOUT, REGISTER, UPDATE_AUTH_USER_INFO} from '../actions/types';
 
 const initialState = {
     authUserInfo: '',
@@ -21,7 +15,8 @@ export default function (state = initialState, action) {
                 ...state,
                 message: action.payload.meta.message,
                 auth: action.payload.meta.auth,
-                email: action.payload.userData.email
+                authUserInfo: action.payload.hasOwnProperty('userData') ? action.payload.userData : '',
+                email: action.payload.hasOwnProperty('userData') ? action.payload.userData.email : ''
             };
         case REGISTER:
             return {
