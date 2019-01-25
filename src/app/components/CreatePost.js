@@ -26,7 +26,7 @@ export class CreatePost extends Component {
     onSubmit = e => {
         e.preventDefault();
         const newPost = {
-            userId: localStorage.getItem('phone-manager-user-id'),
+            userId: localStorage.getItem('user-id'),
             postBody: this.state.body
         };
         // Add contact

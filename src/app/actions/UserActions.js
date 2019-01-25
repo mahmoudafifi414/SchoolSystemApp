@@ -1,14 +1,15 @@
 import axios from 'axios';
-import {GET_AUTH_USER_INFO, LOGIN, LOGOUT, REGISTER, UPDATE_AUTH_USER_INFO} from './types';
+import {GET_AUTH_USER_INFO, GET_USERS_OF_SAME_NETWORK, LOGIN, LOGOUT, REGISTER, UPDATE_AUTH_USER_INFO} from './types';
 
 export const loginAction = loginInfo => dispatch => {
     axios.post('http://127.0.0.1:8000/api/login', loginInfo).then((res) => {
-        //console.log(res.data.userData)
+            //console.log(res.data.userData)
             if (res.data.hasOwnProperty('access_token')) {
                 localStorage.setItem('user-id', res.data.userData.id)
                 localStorage.setItem('user-token', res.data.access_token)
                 localStorage.setItem('user-refresh-token', res.data.refresh_token)
                 localStorage.setItem('user-email', res.data.userData.email)
+                localStorage.setItem('user-name', res.data.userData.name)
             }
             return res
         }
@@ -44,11 +45,20 @@ export const updateAuthUserInfo = info => dispatch => {
         })
     );
 };
+export const getUsersOfSameNetwork = () => dispatch => {
+    axios.get('http://127.0.0.1:8000/api/users').then(res =>
+        dispatch({
+            type: GET_USERS_OF_SAME_NETWORK,
+            payload: res.data.users
+        })
+    );
+}
 export const logoutAction = () => dispatch => {
-    localStorage.removeItem('phone-manager-user-token');
-    localStorage.removeItem('phone-manager-user-email');
-    localStorage.removeItem('phone-manager-user-id');
-    localStorage.removeItem('phone-manager-user-phone-number');
+    localStorage.removeItem('user-id')
+    localStorage.removeItem('user-token')
+    localStorage.removeItem('user-refresh-token')
+    localStorage.removeItem('user-email')
+    localStorage.removeItem('user-name')
     dispatch({
         type: LOGOUT,
         payload: ''

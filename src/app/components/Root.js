@@ -31,7 +31,7 @@ class Root extends Component {
                         </div>
                         <Route path="/register" component={register}/>
                         <Route path="/logout" component={Logout}/>
-                        <Route path="/personaldetails" component={PersonalDetails}/>
+                        {/*<Route path="/personaldetails" component={PersonalDetails}/>*/}
                     </div>
                     {authRoute ?
                         <div className="row">

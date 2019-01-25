@@ -1,11 +1,15 @@
-import {GET_AUTH_USER_INFO, LOGIN, LOGOUT, REGISTER, UPDATE_AUTH_USER_INFO} from '../actions/types';
+import {
+    GET_AUTH_USER_INFO, GET_USERS_OF_SAME_NETWORK, LOGIN, LOGOUT, REGISTER,
+    UPDATE_AUTH_USER_INFO
+} from '../actions/types';
 
 const initialState = {
     authUserInfo: '',
     updatedAuthUserInfo: 'no',
     message: '',
     auth: 'no',
-    email: ''
+    email: '',
+    usersOfSameNetwork: []
 };
 
 export default function (state = initialState, action) {
@@ -38,6 +42,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 auth: 'no',
+            };
+        case GET_USERS_OF_SAME_NETWORK:
+            return {
+                ...state,
+               usersOfSameNetwork:action.payload
             };
         default:
             return state;

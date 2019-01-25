@@ -19,3 +19,4 @@ export const CHECK_EXISTENCE = 'CHECK_EXISTENCE';
 export const ADD_POST = 'ADD_POST';
 export const GET_POSTS = 'GET_POSTS';
 export const DELETE_POST = 'DELETE_POST';
+export const GET_USERS_OF_SAME_NETWORK = 'GET_USERS_OF_SAME_NETWORK';

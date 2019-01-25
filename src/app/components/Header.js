@@ -16,7 +16,7 @@ class Header extends Component {
         const userInfoById = {
             authUserId: localStorage.getItem('phone-manager-user-id')
         }
-        this.props.getAuthUserInfo(userInfoById)
+        /*this.props.getAuthUserInfo(userInfoById)*/
     }
 
     showHideForm = () => {
@@ -59,7 +59,7 @@ class Header extends Component {
         let nav;
         let auth = localStorage.getItem('user-token') ? 'yes' : 'no'
         const {authUserInfo} = this.props.userReducer;
-        const userNameOrEmail = authUserInfo.hasOwnProperty('name') ? authUserInfo.name : authUserInfo.email
+        const userNameOrEmail = authUserInfo.hasOwnProperty('name') ? authUserInfo.name : localStorage.getItem('user-name')
         if (auth == 'yes') {
             nav = <Nav pullRight>
                 <NavItem onClick={this.showHideForm}>

@@ -17,7 +17,7 @@ import {
 } from './types';
 
 export const getContacts = data => dispatch => {
-    axios.post('http://localhost:3000/api/contacts', data).then((res) => {
+    axios.post('http://127.0.0.1:8000/api/contacts', data).then((res) => {
             return res
         }
     ).then(res =>
@@ -36,7 +36,7 @@ export const getPosts = () => dispatch => {
     })
 };
 export const deletePost = (id) => dispatch => {
-    axios.delete('http://localhost:8000/posts' + id).then(res => {
+    axios.delete('http://127.0.0.1:8000/api/post/delete/' + id).then(res => {
         dispatch({
             type: DELETE_POST,
             payload: res.data.id,
@@ -53,7 +53,7 @@ export const addContact = (contact, socket) => dispatch => {
     })
 };
 export const addPost = (postData) => dispatch => {
-    axios.post('http://localhost:8000', postData).then(res => {
+    axios.post('http://127.0.0.1:8000/api/post/add', postData).then(res => {
         dispatch({
             type: ADD_POST,
             payload: res.data.postData,
