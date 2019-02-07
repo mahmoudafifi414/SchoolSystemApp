@@ -7,9 +7,9 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import ContactList from "./ContactList";
 import CreatePost from "./CreatePost";
 import ChatList from "./ChatList";
-import PersonalDetails from "./PersonalDetails";
 import {connect} from 'react-redux'
 import Logout from "./Logout";
+import {sideList} from "./Admin/sideList";
 
 class Root extends Component {
     render() {
@@ -23,7 +23,7 @@ class Root extends Component {
             <BrowserRouter>
                 <div className="container-fluid">
                     <div className="row">
-                        <Header/>
+                       <Header/>
                     </div>
                     <div className="row">
                         <div className="col-md-6 col-xs-offset-3">
@@ -31,12 +31,13 @@ class Root extends Component {
                         </div>
                         <Route path="/register" component={register}/>
                         <Route path="/logout" component={Logout}/>
+                        <Route path="/admin" component={sideList}/>
                         {/*<Route path="/personaldetails" component={PersonalDetails}/>*/}
                     </div>
                     {authRoute ?
                         <div className="row">
                             <div className="col-md-2">
-                                <ContactList/>
+                                {/*<ContactList/>*/}
                             </div>
                             <div className="col-md-10">
                                 <CreatePost/>

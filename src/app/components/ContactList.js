@@ -39,8 +39,10 @@ export class ContactList extends Component {
                                 </div>
                                 <div className="col-xs-12 col-sm-9">
                                     <span className="name">{user.name}</span><br/>
-                                    <span class="badge">Teacher</span><br/>
-                                    <span className="glyphicon glyphicon-map-marker text-muted c-info"
+                                    {user.roles.map((role)=>(
+                                        <span key={role.id} className="badge">{role.name}</span>
+                                    ))}
+                                    <br/><span className="glyphicon glyphicon-map-marker text-muted c-info"
                                           data-toggle="tooltip"
                                           title="5842 Hillcrest Rd"></span>
                                     <span className="visible-xs"> <span

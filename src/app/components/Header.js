@@ -68,6 +68,9 @@ class Header extends Component {
                 <NavItem onClick={this.showHideChatList}>
                     Inbox
                 </NavItem>
+                <NavItem onClick={this.showHideChatList}>
+                    TimeTable
+                </NavItem>
                 <NavDropdown eventKey={3} title={userNameOrEmail} id="basic-nav-dropdown">
                     <MenuItem href='/logout'>Logout</MenuItem>
                     <MenuItem href='/personal-details'>Personal Details</MenuItem>
