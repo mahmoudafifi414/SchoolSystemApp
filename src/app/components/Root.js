@@ -9,7 +9,7 @@ import CreatePost from "./CreatePost";
 import ChatList from "./ChatList";
 import {connect} from 'react-redux'
 import Logout from "./Logout";
-import {sideList} from "./Admin/sideList";
+import {Home} from "./Admin/Home";
 
 class Root extends Component {
     render() {
@@ -31,18 +31,18 @@ class Root extends Component {
                         </div>
                         <Route path="/register" component={register}/>
                         <Route path="/logout" component={Logout}/>
-                        <Route path="/admin" component={sideList}/>
+                        <Route path="/admin" component={Home}/>
                         {/*<Route path="/personaldetails" component={PersonalDetails}/>*/}
                     </div>
                     {authRoute ?
                         <div className="row">
-                            <div className="col-md-2">
-                                {/*<ContactList/>*/}
+                            {/*<div className="col-md-2">
+                                {<ContactList/>}
                             </div>
                             <div className="col-md-10">
                                 <CreatePost/>
                                 <ChatList/>
-                            </div>
+                            </div>*/}
                         </div> : ''}
                 </div>
             </BrowserRouter>

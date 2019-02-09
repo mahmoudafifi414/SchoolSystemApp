@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {addPost, deletePost, getPosts} from "../actions/NumbersActions";
 import {MenuItem, Nav, NavDropdown} from "react-bootstrap"
 
-export class CreatePost extends Component {
+class CreatePost extends Component {
     componentDidMount() {
         this.props.getPosts();
     }
