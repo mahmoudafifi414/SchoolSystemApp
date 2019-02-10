@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {SideList} from './SideList'
-import {Users} from './Users'
+import Users from './Users'
 export class Home extends Component {
     render() {
         return (
