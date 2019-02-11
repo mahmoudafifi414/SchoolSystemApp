@@ -1,8 +1,12 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import PhoneReducer from './PhoneReducer';
 import UserReducer from './UserReducer';
+import SemesterReducer from "./SemesterReducer";
+import YearReducer from "./YearReducer";
 
 export default combineReducers({
     phoneNumbers: PhoneReducer,
-    UserReducer: UserReducer
+    UserReducer: UserReducer,
+    SemesterReducer: SemesterReducer,
+    YearsReducer: YearReducer
 });

@@ -46,7 +46,6 @@ export const updateAuthUserInfo = info => dispatch => {
     );
 };
 export const getUsersOfSameNetwork = (numberPerPage) => dispatch => {
-    console.log('http://127.0.0.1:8000/api/users' + (numberPerPage != null ? '/' + numberPerPage : ''))
     axios.get('http://127.0.0.1:8000/api/users' + (numberPerPage != null ? '/' + numberPerPage : '')).then(res =>
         dispatch({
             type: GET_USERS_OF_SAME_NETWORK,
