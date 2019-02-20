@@ -1,6 +1,11 @@
 import {
-    GET_AUTH_USER_INFO, GET_USERS_OF_SAME_NETWORK, LOGIN, LOGOUT, REGISTER,
-    UPDATE_AUTH_USER_INFO
+    GET_AUTH_USER_INFO,
+    GET_USERS_OF_SAME_NETWORK,
+    LOGIN,
+    LOGOUT,
+    REGISTER,
+    UPDATE_AUTH_USER_INFO,
+    GET_DATA_FOR_ADD_USER
 } from '../actions/types';
 
 const initialState = {
@@ -9,7 +14,8 @@ const initialState = {
     message: '',
     auth: 'no',
     email: '',
-    usersOfSameNetwork: []
+    usersOfSameNetwork: [],
+    dataToAddUser: []
 };
 
 export default function (state = initialState, action) {
@@ -46,7 +52,12 @@ export default function (state = initialState, action) {
         case GET_USERS_OF_SAME_NETWORK:
             return {
                 ...state,
-               usersOfSameNetwork:action.payload
+                usersOfSameNetwork: action.payload
+            };
+        case GET_DATA_FOR_ADD_USER:
+            return {
+                ...state,
+                dataToAddUser: action.payload
             };
         default:
             return state;
