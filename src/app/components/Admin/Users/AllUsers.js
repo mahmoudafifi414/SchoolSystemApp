@@ -37,18 +37,23 @@ class AllUsers extends Component {
                             <th scope="col">name</th>
                             <th scope="col">email</th>
                             <th scope="col">roles</th>
+                            <th scope="col">action</th>
                         </tr>
                         </thead>
                         <tbody>
                         {usersOfSameNetwork.data.map((user) => (
                             <tr key={user.id}>
-                                <th scope="row">{user.id}</th>
+                                <th scope="row"><a href="">{user.id}</a></th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>
                                     {user.roles.map((role) => (
                                         <span key={role.id} className="badge">{role.name}</span>
                                     ))}
+                                </td>
+                                <td>
+                                    <a onClick={this.props.getLinkNameInSideNavigation} id={user.id} className="btn btn-info">Edit User</a>
+                                    <button type="button" className="btn btn-danger">delete</button>
                                 </td>
                             </tr>
                         ))}

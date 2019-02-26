@@ -1,11 +1,12 @@
 import {
     GET_AUTH_USER_INFO,
+    GET_DATA_FOR_ADD_USER,
     GET_USERS_OF_SAME_NETWORK,
     LOGIN,
     LOGOUT,
     REGISTER,
     UPDATE_AUTH_USER_INFO,
-    GET_DATA_FOR_ADD_USER
+    GET_DATA_FOR_EDIT_USER
 } from '../actions/types';
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
     auth: 'no',
     email: '',
     usersOfSameNetwork: [],
-    dataToAddUser: []
+    dataToAddUser: [],
+    dataToEditUser: []
 };
 
 export default function (state = initialState, action) {
@@ -58,6 +60,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 dataToAddUser: action.payload
+            };
+        case GET_DATA_FOR_EDIT_USER:
+            return {
+                ...state,
+                dataToEditUser: action.payload
             };
         default:
             return state;

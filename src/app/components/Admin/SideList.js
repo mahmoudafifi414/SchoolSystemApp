@@ -23,7 +23,7 @@ export class SideList extends Component {
                                             <div className="panel-body">
                                                 <ul className="nav navbar-nav">
                                                     <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>All Users</a></li>
-                                                    <li><a href="#"onClick={this.props.getLinkNameInSideNavigation}>Add Edit User</a></li>
+                                                    <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>Add Edit User</a></li>
                                                 </ul>
                                             </div>
                                         </div>

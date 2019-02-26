@@ -1,5 +1,15 @@
 import axios from 'axios';
-import {GET_AUTH_USER_INFO, GET_DATA_FOR_ADD_USER,GET_USERS_OF_SAME_NETWORK, LOGIN, ADD_USER,LOGOUT, REGISTER, UPDATE_AUTH_USER_INFO} from './types';
+import {
+    ADD_USER,
+    GET_AUTH_USER_INFO,
+    GET_DATA_FOR_ADD_USER,
+    GET_DATA_FOR_EDIT_USER,
+    GET_USERS_OF_SAME_NETWORK,
+    LOGIN,
+    LOGOUT,
+    REGISTER,
+    UPDATE_AUTH_USER_INFO
+} from './types';
 
 export const loginAction = loginInfo => dispatch => {
     axios.post('http://127.0.0.1:8000/api/login', loginInfo).then((res) => {
@@ -65,6 +75,14 @@ export const getDataForAddUser = () => dispatch => {
     axios.get('http://127.0.0.1:8000/api/user/prepare-data').then(res =>
         dispatch({
             type: GET_DATA_FOR_ADD_USER,
+            payload: res.data
+        })
+    )
+}
+export const getDataForEditUser = (userId) => dispatch => {
+    axios.get('http://127.0.0.1:8000/api/user/edit/' + userId).then(res =>
+        dispatch({
+            type: GET_DATA_FOR_EDIT_USER,
             payload: res.data
         })
     )

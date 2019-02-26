@@ -8,15 +8,18 @@ import AllYears from './Years/AllYears'
 export class Home extends Component {
     constructor() {
         super();
-        this.state = {componentToRender: <AddEditUser/>};
+        this.state = {componentToRender: <AllUsers getLinkNameInSideNavigation={this.getLinkNameInSideNavigation}/>};
     }
 
     getLinkNameInSideNavigation = (e) => {
         e.preventDefault();
         const {text} = e.target;
+        const userId = e.target.id ? e.target.id : 0;
         switch (text.trim()) {
             case 'All Users':
-                this.setState({componentToRender: <AllUsers/>});
+                this.setState({
+                    componentToRender: <AllUsers getLinkNameInSideNavigation={this.getLinkNameInSideNavigation}/>
+                });
                 break;
             case 'Classrooms':
                 this.setState({componentToRender: <Classrooms/>});
@@ -30,9 +33,13 @@ export class Home extends Component {
             case 'Add Edit User':
                 this.setState({componentToRender: <AddEditUser/>});
                 break;
-            default:
-                this.setState({componentToRender: <Users/>});
+            case 'Edit User':
+                this.setState({componentToRender: <AddEditUser actionType="edit" userId={userId}/>});
                 break;
+            default:
+                this.setState({componentToRender: <AllUsers/>});
+                break;
+
         }
     }
 

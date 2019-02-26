@@ -4,9 +4,6 @@ import Header from "./Header"
 import Login from "./Login";
 import register from "./register";
 import {BrowserRouter, Route} from 'react-router-dom'
-import ContactList from "./ContactList";
-import CreatePost from "./CreatePost";
-import ChatList from "./ChatList";
 import {connect} from 'react-redux'
 import Logout from "./Logout";
 import {Home} from "./Admin/Home";
@@ -23,7 +20,7 @@ class Root extends Component {
             <BrowserRouter>
                 <div className="container-fluid">
                     <div className="row">
-                       <Header/>
+                        <Header/>
                     </div>
                     <div className="row">
                         <div className="col-md-6 col-xs-offset-3">

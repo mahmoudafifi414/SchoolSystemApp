@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import {connect} from 'react-redux'
-import {addNewUser, getDataForAddUser} from '../../../actions/UserActions'
+import {addNewUser, getDataForAddUser, getDataForEditUser} from '../../../actions/UserActions'
 
 class AddEditUser extends Component {
     constructor() {
@@ -9,6 +9,9 @@ class AddEditUser extends Component {
     }
 
     componentDidMount() {
+        if (this.props.actionType == 'edit') {
+            this.props.getDataForEditUser(this.props.userId)
+        }
         this.props.getDataForAddUser()
     }
 
@@ -60,18 +63,6 @@ class AddEditUser extends Component {
                     </div>
                     {this.state.showHideElement == 'student' ?
                         <div className="form-group col-md-6">
-                            <label htmlFor="classroom">Classroom</label>
-                            <select className="form-control" id="classroom">
-                                <option></option>
-                                {dataToAddUser.classrooms.map((classroom) => (
-                                    <option key={classroom.id} value={classroom.id}>{classroom.name}</option>
-                                ))
-                                }
-                            </select>
-                        </div>
-                        : ''}
-                    {this.state.showHideElement == 'student' ?
-                        <div className="form-group col-md-6">
                             <label htmlFor="roles">Academic Year</label>
                             <select className="form-control" id="year">
                                 <option></option>
@@ -82,6 +73,46 @@ class AddEditUser extends Component {
                             </select>
                         </div>
                         : ''}
+                    {this.state.showHideElement == 'student' ?
+                        <div className="form-group col-md-6">
+                            <label htmlFor="classroom">Classroom</label>
+                            <select className="form-control" id="classroom">
+                                <option></option>
+                                {dataToAddUser.classrooms.map((classroom) => (
+                                    <option key={classroom.id} value={classroom.id}>{classroom.name}</option>
+                                ))
+                                }
+                            </select>
+                        </div>
+                        : ''}
+                    {this.state.showHideElement == 'teacher' ?
+                        <div className="form-group col-md-6">
+                            <label htmlFor="classroom">Subjects</label>
+                            <select className="form-control" id="subject">
+                                <option></option>
+                                {dataToAddUser.subjects.map((subject) => (
+                                    <option key={subject.id} value={subject.id}>{subject.name}</option>
+                                ))
+                                }
+                            </select>
+                        </div>
+                        : ''}
+                    <div className="form-group col-md-6">
+                        <label htmlFor="age">Age</label>
+                        <input type="number" className="form-control"/>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="country">Country</label>
+                        <input type="text" className="form-control"/>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="city">City</label>
+                        <input type="text" className="form-control"/>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="address">Address</label>
+                        <input type="text" className="form-control"/>
+                    </div>
                 </form>
             )
         }
@@ -97,5 +128,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getDataForAddUser, addNewUser}
+    {getDataForAddUser, addNewUser,getDataForEditUser}
 )(AddEditUser);
