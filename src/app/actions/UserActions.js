@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {
-    ADD_USER,
     GET_AUTH_USER_INFO,
     GET_DATA_FOR_ADD_USER,
     GET_DATA_FOR_EDIT_USER,
@@ -88,11 +87,13 @@ export const getDataForEditUser = (userId) => dispatch => {
     )
 }
 export const addNewUser = (newUserData) => dispatch => {
-    axios.post('http://127.0.0.1:8000/api/user', newUserData).then(res =>
-        dispatch({
-            type: ADD_USER,
-            payload: res.data.users
-        })
+    axios.post('http://127.0.0.1:8000/api/user', newUserData).then(res => {
+            /*dispatch({
+                type: ADD_NEW_USER,
+                payload: res.data.users
+            })*/
+            console.log(res);
+        }
     )
 }
 export const logoutAction = () => dispatch => {

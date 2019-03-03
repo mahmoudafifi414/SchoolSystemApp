@@ -25,3 +25,4 @@ export const GET_ALL_YEARS = 'GET_ALL_YEARS';
 export const ADD_USER = 'ADD_USER';
 export const GET_DATA_FOR_ADD_USER = 'GET_DATA_FOR_ADD_USER';
 export const GET_DATA_FOR_EDIT_USER = 'GET_DATA_FOR_EDIT_USER';
+export const ADD_NEW_USER = 'ADD_NEW_USER';

@@ -1,12 +1,13 @@
 import {
     GET_AUTH_USER_INFO,
     GET_DATA_FOR_ADD_USER,
+    GET_DATA_FOR_EDIT_USER,
     GET_USERS_OF_SAME_NETWORK,
     LOGIN,
     LOGOUT,
     REGISTER,
     UPDATE_AUTH_USER_INFO,
-    GET_DATA_FOR_EDIT_USER
+    ADD_NEW_USER
 } from '../actions/types';
 
 const initialState = {
@@ -66,6 +67,8 @@ export default function (state = initialState, action) {
                 ...state,
                 dataToEditUser: action.payload
             };
+        case ADD_NEW_USER:
+            return state;
         default:
             return state;
     }
