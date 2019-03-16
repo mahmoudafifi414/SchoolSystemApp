@@ -1,7 +1,14 @@
 import React, {Component} from "react"
 import '../../../assets/css/admin_css.css'
+import {connect} from 'react-redux'
+import {getLinkNameInSideNavigation} from '../../actions/ComponentRendererAction'
 
-export class SideList extends Component {
+class SideList extends Component {
+    getLinkNameInSideNavigation = (e) => {
+        e.preventDefault();
+        this.props.getLinkNameInSideNavigation(e.target.id, 0);
+    };
+
     render() {
         return (
             <div className="col-md-2 sidebar">
@@ -22,8 +29,12 @@ export class SideList extends Component {
                                         <div id="dropdown-lvl1" className="panel-collapse collapse">
                                             <div className="panel-body">
                                                 <ul className="nav navbar-nav">
-                                                    <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>All Users</a></li>
-                                                    <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>Add Edit User</a></li>
+                                                    <li><a href="#" id="all_users"
+                                                           onClick={this.getLinkNameInSideNavigation}>All
+                                                        Users</a></li>
+                                                    <li><a href="#" id="add_user"
+                                                           onClick={this.props.getLinkNameInSideNavigation}>Add User</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -36,7 +47,9 @@ export class SideList extends Component {
                                         <div id="dropdown-lvl2" className="panel-collapse collapse">
                                             <div className="panel-body">
                                                 <ul className="nav navbar-nav">
-                                                    <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>All Semesters</a></li>
+                                                    <li><a href="#" id="all_semesters"
+                                                           onClick={this.getLinkNameInSideNavigation}>All
+                                                        Semesters</a></li>
                                                     <li><a href="#">Add Edit</a></li>
                                                 </ul>
                                             </div>
@@ -50,8 +63,25 @@ export class SideList extends Component {
                                         <div id="dropdown-lvl3" className="panel-collapse collapse">
                                             <div className="panel-body">
                                                 <ul className="nav navbar-nav">
-                                                    <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>All Years</a></li>
+                                                    <li><a href="#" id="all_years"
+                                                           onClick={this.getLinkNameInSideNavigation}>All
+                                                        Years</a></li>
                                                     <li><a href="#">Add Edit</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li className="panel panel-default" id="dropdown">
+                                        <a data-toggle="collapse" href="#dropdown-lvl4">
+                                            <span className="glyphicon glyphicon-user"></span>Subjects<span
+                                            className="caret"></span>
+                                        </a>
+                                        <div id="dropdown-lvl4" className="panel-collapse collapse">
+                                            <div className="panel-body">
+                                                <ul className="nav navbar-nav">
+                                                    <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>All
+                                                        Subjects</a></li>
+                                                    <li><a href="#">Add Subject</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -67,3 +97,12 @@ export class SideList extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    ComponentRendererReducer: state.ComponentRendererReducer
+});
+
+export default connect(
+    mapStateToProps,
+    {getLinkNameInSideNavigation}
+)(SideList);

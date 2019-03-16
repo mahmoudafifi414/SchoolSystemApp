@@ -90,7 +90,7 @@ class Header extends Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/home">School System</a>
+                        <a href="/home">Demo</a>
                     </Navbar.Brand>
                     <Navbar.Toggle/>
                 </Navbar.Header>

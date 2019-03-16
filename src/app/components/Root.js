@@ -6,7 +6,7 @@ import register from "./register";
 import {BrowserRouter, Route} from 'react-router-dom'
 import {connect} from 'react-redux'
 import Logout from "./Logout";
-import {Home} from "./Admin/Home";
+import Home from "./Admin/Home";
 
 class Root extends Component {
     render() {

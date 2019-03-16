@@ -52,7 +52,7 @@ class AllUsers extends Component {
                                     ))}
                                 </td>
                                 <td>
-                                    <a onClick={this.props.getLinkNameInSideNavigation} id={user.id} className="btn btn-info">Edit User</a>
+                                    <a onClick={this.props.getLinkNameInSideNavigation} id="edit_user" className={"btn btn-info "+user.id}>Edit User</a>
                                     <button type="button" className="btn btn-danger">delete</button>
                                 </td>
                             </tr>

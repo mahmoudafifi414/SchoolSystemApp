@@ -1,0 +1,41 @@
+import {SET_COMPONENT} from "./types"
+
+export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch => {
+    let componentToRender = '';
+    let componentMetaData = 0;
+    switch (elementId) {
+        case 'all_users':
+            componentToRender = 'AllUsers';
+            break;
+        case 'Classrooms':
+            componentToRender = 'Classrooms';
+            break;
+        case 'all_semesters':
+            componentToRender = 'AllSemesters';
+            break;
+        case 'all_years':
+            componentToRender = 'AllYears';
+            break;
+        case 'add_user':
+            componentToRender = 'AddEditUser';
+            break;
+        case 'edit_user':
+            /*const userId = e.target.className.split(' ')[2];*/
+            /*this.setState({componentToRender: <AddEditUser actionType="edit" userId={userId}/>});*/
+            componentToRender = 'AddEditUser';
+            break;
+        case 'year_info':
+            const yearId = elementClass.split(' ')[2];
+            componentToRender = 'InfoPage';
+            componentMetaData = yearId;
+            break;
+        default:
+            componentToRender = 'InfoPage';
+            break;
+    }
+    dispatch({
+        type: SET_COMPONENT,
+        payload: componentToRender,
+        payloadMeta: componentMetaData
+    });
+};

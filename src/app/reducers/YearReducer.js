@@ -1,7 +1,8 @@
-import {GET_ALL_YEARS} from '../actions/types';
+import {GET_ALL_YEARS, GET_YEAR_RELATIONS_DATA} from '../actions/types';
 
 const initialState = {
-    allyears: []
+    allyears: [],
+    relationsData: []
 };
 
 export default function (state = initialState, action) {
@@ -10,6 +11,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 allyears: action.payload
+            };
+        case GET_YEAR_RELATIONS_DATA:
+            return {
+                ...state,
+                relationsData: action.payload
             };
         default:
             return state;

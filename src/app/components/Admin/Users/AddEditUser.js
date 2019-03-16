@@ -140,17 +140,22 @@ class AddEditUser extends Component {
 
     render() {
         const {dataToAddUser} = this.props.UserReducer;
-        if (Object.keys(dataToAddUser).length) {
+        const {dataToEditUser} = this.props.UserReducer;
+        if (Object.keys(dataToAddUser).length > 0) {
             return (
                 <form>
                     <div className="form-group col-md-6">
                         <label htmlFor="name">Name</label>
-                        <input onChange={this.setName} type="text" className="form-control" id="name"
+                        <input onChange={this.setName} type="text"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.name : ''}
+                               className="form-control" id="name"
                                placeholder=""/>
                     </div>
                     <div className="form-group col-md-6">
                         <label htmlFor="email">Email address</label>
-                        <input onChange={this.setEmail} type="email" className="form-control" id="email"
+                        <input onChange={this.setEmail} type="email"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.email : ''}
+                               className="form-control" id="email"
                                placeholder=""/>
                     </div>
                     <div className="form-group col-md-6">
@@ -195,12 +200,16 @@ class AddEditUser extends Component {
 
                     <div className="form-group col-md-6">
                         <label htmlFor="classroom">Phone Number</label>
-                        <input onChange={this.setPhoneNumber} type="text" className="form-control"/>
+                        <input onChange={this.setPhoneNumber} type="text"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.phone_number : ''}
+                               className="form-control"/>
                     </div>
 
                     <div className="form-group col-md-6">
                         <label htmlFor="classroom">Home Phone Number</label>
-                        <input onChange={this.setHomePhoneNumber} type="text" className="form-control"/>
+                        <input onChange={this.setHomePhoneNumber} type="text"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.home_phone_number : ''}
+                               className="form-control"/>
                     </div>
 
                     {this.state.showHideElement == 'teacher' ?
@@ -217,22 +226,32 @@ class AddEditUser extends Component {
                         : ''}
                     <div className="form-group col-md-6">
                         <label htmlFor="age">Age</label>
-                        <input onChange={this.setAge} type="number" className="form-control"/>
+                        <input onChange={this.setAge} type="number"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.age : ''}
+                               className="form-control"/>
                     </div>
                     <div className="form-group col-md-6">
                         <label htmlFor="country">Country</label>
-                        <input onChange={this.setCountry} type="text" className="form-control"/>
+                        <input onChange={this.setCountry} type="text"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.country : ''}
+                               className="form-control"/>
                     </div>
                     <div className="form-group col-md-6">
                         <label htmlFor="city">City</label>
-                        <input onChange={this.setCity} type="text" className="form-control"/>
+                        <input onChange={this.setCity} type="text"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.city : ''}
+                               className="form-control"/>
                     </div>
                     <div className="form-group col-md-6">
                         <label htmlFor="address">Address</label>
-                        <input onChange={this.setAddress} type="text" className="form-control"/>
+                        <input onChange={this.setAddress} type="text"
+                               defaultValue={this.props.actionType == 'edit' ? dataToEditUser.userData.address : ''}
+                               className="form-control"/>
                     </div>
                     <div className="form-group col-md-12">
-                        <button onClick={this.saveUser} type="text" className="btn btn-md btn-primary">Save</button>
+                        <button onClick={this.saveUser} type="text"
+                                className="btn btn-md btn-primary">{this.props.actionType == 'edit' ? 'Update' : 'Save'}
+                        </button>
                     </div>
                 </form>
             )
