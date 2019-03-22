@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import {connect} from 'react-redux'
 import {getRelationData} from "../../../actions/YearActions";
 import '../../../../assets/css/year_info.css'
+import {getLinkNameInSideNavigation} from '../../../actions/ComponentRendererAction'
 
 class InfoPage extends Component {
 
@@ -12,8 +13,12 @@ class InfoPage extends Component {
             this.props.getRelationData(yearId);
         }
     };
-
+    getLinkNameInSideNavigation = (e) => {
+        e.preventDefault();
+        this.props.getLinkNameInSideNavigation(e.target.id, e.target.className);
+    };
     render() {
+        const yearId = this.props.ComponentRendererReducer.componentMetaData;
         const {relationsData} = this.props.YearsReducer;
         const headerStyle = {
             marginLeft: 275
@@ -33,7 +38,8 @@ class InfoPage extends Component {
                                 <div className="circle-tile-number text-faded ">
                                     {relationsData.data.classrooms.length}
                                 </div>
-                                <a className="circle-tile-footer" href="#">More Info<i
+                                <a onClick={this.getLinkNameInSideNavigation} id='year_classrooms'
+                                   className={"btn circle-tile-footer "+yearId}>More Info<i
                                     className="fa fa-chevron-circle-right"></i></a>
                             </div>
                         </div>
@@ -53,5 +59,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getRelationData}
+    {getRelationData,getLinkNameInSideNavigation}
 )(InfoPage);

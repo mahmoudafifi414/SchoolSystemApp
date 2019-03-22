@@ -4,13 +4,15 @@ import {connect} from 'react-redux'
 import AllUsers from './Users/AllUsers'
 import AllYears from './Years/AllYears'
 import InfoPage from './Years/InfoPage'
+import YearsClassrooms from './Years/YearsClassrooms'
 
 class Home extends Component {
     render() {
         const Components = {
             AllUsers: AllUsers,
             AllYears: AllYears,
-            InfoPage: InfoPage
+            InfoPage: InfoPage,
+            YearsClassrooms : YearsClassrooms
         };
         const {componentToRender} = this.props.ComponentRendererReducer;
         const Component = Components[componentToRender];

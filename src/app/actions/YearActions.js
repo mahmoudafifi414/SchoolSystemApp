@@ -24,4 +24,12 @@ export const getRelationData = (yearId) => dispatch => {
             payload: res.data
         })
     );
+};
+export const getClassRoomsForYear = (yearId) => dispatch => {
+    axios.get('http://localhost:8000/api/year/get-relations-data/' + yearId).then(res =>
+        dispatch({
+            type: GET_YEAR_RELATIONS_DATA,
+            payload: res.data
+        })
+    );
 }

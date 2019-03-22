@@ -3,6 +3,7 @@ import {SET_COMPONENT} from "./types"
 export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch => {
     let componentToRender = '';
     let componentMetaData = 0;
+    let yearId = 0;
     switch (elementId) {
         case 'all_users':
             componentToRender = 'AllUsers';
@@ -25,8 +26,13 @@ export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch
             componentToRender = 'AddEditUser';
             break;
         case 'year_info':
-            const yearId = elementClass.split(' ')[2];
+            yearId = elementClass.split(' ')[2];
             componentToRender = 'InfoPage';
+            componentMetaData = yearId;
+            break;
+        case 'year_classrooms':
+            yearId = elementClass.split(' ')[2];
+            componentToRender = 'YearsClassrooms';
             componentMetaData = yearId;
             break;
         default:
