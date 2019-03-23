@@ -1,4 +1,4 @@
-import {GET_ALL_YEARS, GET_YEAR_RELATIONS_DATA} from "./types"
+import {ADD_CLASSROOM_TO_YEAR, DETACH_CLASSROOM_FROM_YEAR, GET_ALL_YEARS, GET_YEAR_RELATIONS_DATA} from "./types"
 import axios from 'axios'
 
 export const getAllYears = (numberPerPage) => dispatch => {
@@ -16,7 +16,7 @@ export const updatePaginationData = (apiLink, paginationNumber) => dispatch => {
             payload: res.data.semesters
         })
     );
-}
+};
 export const getRelationData = (yearId) => dispatch => {
     axios.get('http://localhost:8000/api/year/get-relations-data/' + yearId).then(res =>
         dispatch({
@@ -25,11 +25,19 @@ export const getRelationData = (yearId) => dispatch => {
         })
     );
 };
-export const getClassRoomsForYear = (yearId) => dispatch => {
-    axios.get('http://localhost:8000/api/year/get-relations-data/' + yearId).then(res =>
+export const addClassroomToYear = (data) => dispatch => {
+    axios.post('http://localhost:8000/api/year/attach-classroom', data).then(res =>
         dispatch({
-            type: GET_YEAR_RELATIONS_DATA,
+            type: ADD_CLASSROOM_TO_YEAR,
+            payload: res.data.data
+        })
+    );
+};
+export const removeClassroomFromYear = (data) => dispatch => {
+    axios.post('http://localhost:8000/api/year/detach-classroom', data).then(res =>
+        dispatch({
+            type: DETACH_CLASSROOM_FROM_YEAR,
             payload: res.data
         })
     );
-}
+};

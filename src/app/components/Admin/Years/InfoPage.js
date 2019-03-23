@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {getRelationData} from "../../../actions/YearActions";
 import '../../../../assets/css/year_info.css'
 import {getLinkNameInSideNavigation} from '../../../actions/ComponentRendererAction'
+import {getClassrooms} from '../../../actions/ClassroomsActions';
 
 class InfoPage extends Component {
 
@@ -12,11 +13,13 @@ class InfoPage extends Component {
             const yearId = this.props.ComponentRendererReducer.componentMetaData;
             this.props.getRelationData(yearId);
         }
+        this.props.getClassrooms();
     };
     getLinkNameInSideNavigation = (e) => {
         e.preventDefault();
         this.props.getLinkNameInSideNavigation(e.target.id, e.target.className);
     };
+
     render() {
         const yearId = this.props.ComponentRendererReducer.componentMetaData;
         const {relationsData} = this.props.YearsReducer;
@@ -39,7 +42,7 @@ class InfoPage extends Component {
                                     {relationsData.data.classrooms.length}
                                 </div>
                                 <a onClick={this.getLinkNameInSideNavigation} id='year_classrooms'
-                                   className={"btn circle-tile-footer "+yearId}>More Info<i
+                                   className={"btn circle-tile-footer " + yearId}>More Info<i
                                     className="fa fa-chevron-circle-right"></i></a>
                             </div>
                         </div>
@@ -54,10 +57,11 @@ class InfoPage extends Component {
 
 const mapStateToProps = state => ({
     YearsReducer: state.YearsReducer,
-    ComponentRendererReducer: state.ComponentRendererReducer
+    ComponentRendererReducer: state.ComponentRendererReducer,
+    ClassroomsReducer: state.ClassroomsReducer
 });
 
 export default connect(
     mapStateToProps,
-    {getRelationData,getLinkNameInSideNavigation}
+    {getRelationData, getLinkNameInSideNavigation, getClassrooms}
 )(InfoPage);
