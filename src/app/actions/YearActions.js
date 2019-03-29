@@ -1,18 +1,26 @@
-import {ADD_CLASSROOM_TO_YEAR, DETACH_CLASSROOM_FROM_YEAR, GET_ALL_YEARS, GET_YEAR_RELATIONS_DATA} from "./types"
+import {
+    ADD_CLASSROOM_TO_YEAR,
+    DETACH_CLASSROOM_FROM_YEAR,
+    GET_ALL_YEARS,
+    GET_ALL_YEARS_PAGINATION,
+    GET_YEAR_RELATIONS_DATA
+} from "./types"
 import axios from 'axios'
 
-export const getAllYears = (numberPerPage) => dispatch => {
-    axios.get('http://localhost:8000/api/year' + (numberPerPage != null ? '/' + numberPerPage : '')).then(res =>
-        dispatch({
-            type: GET_ALL_YEARS,
-            payload: res.data.years
-        })
+export const getAllYears = (numberPerPage = 10) => dispatch => {
+    axios.get('http://localhost:8000/api/year' + '/' + (isNaN(numberPerPage) ? '' : numberPerPage)).then(res => {
+            console.log(res.data.years)
+            dispatch({
+                type: res.data.years.per_page ? GET_ALL_YEARS_PAGINATION : GET_ALL_YEARS,
+                payload: res.data.years
+            })
+        }
     );
 }
 export const updatePaginationData = (apiLink, paginationNumber) => dispatch => {
     axios.get(apiLink + '?page=' + paginationNumber).then(res =>
         dispatch({
-            type: GET_ALL_YEARS,
+            type: GET_ALL_YEARS_PAGINATION,
             payload: res.data.semesters
         })
     );

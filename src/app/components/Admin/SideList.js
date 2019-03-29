@@ -73,10 +73,26 @@ class SideList extends Component {
                                     </li>
                                     <li className="panel panel-default" id="dropdown">
                                         <a data-toggle="collapse" href="#dropdown-lvl4">
-                                            <span className="glyphicon glyphicon-user"></span>Subjects<span
+                                            <span className="glyphicon glyphicon-user"></span>Classrooms<span
                                             className="caret"></span>
                                         </a>
                                         <div id="dropdown-lvl4" className="panel-collapse collapse">
+                                            <div className="panel-body">
+                                                <ul className="nav navbar-nav">
+                                                    <li><a href="#" id="all_classrooms"
+                                                           onClick={this.getLinkNameInSideNavigation}>All
+                                                        Classrooms</a></li>
+                                                    <li><a href="#">Add Classroom</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li className="panel panel-default" id="dropdown">
+                                        <a data-toggle="collapse" href="#dropdown-lvl5">
+                                            <span className="glyphicon glyphicon-user"></span>Subjects<span
+                                            className="caret"></span>
+                                        </a>
+                                        <div id="dropdown-lvl5" className="panel-collapse collapse">
                                             <div className="panel-body">
                                                 <ul className="nav navbar-nav">
                                                     <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>All

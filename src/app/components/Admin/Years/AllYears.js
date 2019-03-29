@@ -10,20 +10,20 @@ class AllYears extends Component {
 
     getLinkNameInSideNavigation = (e) => {
         e.preventDefault();
-        this.props.getLinkNameInSideNavigation(e.target.id, e.target.className);
+        this.props.getLinkNameInSideNavigation(e.currentTarget.id, e.currentTarget.className);
     };
     getAllYears = e => {
-        this.props.getAllYears(typeof e !== 'undefined' ? e.target.value : null);
+        typeof e !== 'undefined' ? this.props.getAllYears(e.target.value) : this.props.getAllYears();
     };
     updatePaginationData = e => {
         e.preventDefault();
-        const urlLinkForApi = this.props.YearsReducer.getAllYears.first_page_url.split("?");
+        const urlLinkForApi = this.props.YearsReducer.yearsPagination.first_page_url.split("?");
         this.props.updatePaginationData(urlLinkForApi[0], e.target.text)
     };
 
     render() {
-        const {allyears} = this.props.YearsReducer;
-        if (typeof allyears.data !== 'undefined') {
+        const {yearsPagination} = this.props.YearsReducer;
+        if (typeof yearsPagination.data !== 'undefined') {
             return (
                 <div>
                     <div className="form-group col-sm-2">
@@ -46,7 +46,7 @@ class AllYears extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {allyears.data.map((year) => (
+                        {yearsPagination.data.map((year) => (
                             <tr key={year.id}>
                                 <th scope="row">{year.id}</th>
                                 <td>{year.name}</td>
@@ -67,8 +67,8 @@ class AllYears extends Component {
                         </tbody>
                     </table>
                     <ul className="pagination">
-                        {[...Array(allyears.last_page).keys()].map((i) => (
-                            allyears.current_page == i + 1 ?
+                        {[...Array(yearsPagination.last_page).keys()].map((i) => (
+                            yearsPagination.current_page == i + 1 ?
                                 <li className="active" key={i + 1}><a
                                     onClick={this.updatePaginationData} href='#'>{i + 1}</a></li> :
                                 <li key={i + 1}><a onClick={this.updatePaginationData} href="#">{i + 1}</a></li>

@@ -13,7 +13,13 @@ class InfoPage extends Component {
             const yearId = this.props.ComponentRendererReducer.componentMetaData;
             this.props.getRelationData(yearId);
         }
-        this.props.getClassrooms();
+        this.getClassrooms();
+    };
+    getClassrooms = () => {
+        const {classrooms} = this.props.ClassroomsReducer;
+        if (classrooms.length == 0) {
+            this.props.getClassrooms('all');
+        }
     };
     getLinkNameInSideNavigation = (e) => {
         e.preventDefault();
@@ -40,6 +46,23 @@ class InfoPage extends Component {
                                 <div className="circle-tile-description text-faded">Classrooms</div>
                                 <div className="circle-tile-number text-faded ">
                                     {relationsData.data.classrooms.length}
+                                </div>
+                                <a onClick={this.getLinkNameInSideNavigation} id='year_classrooms'
+                                   className={"btn circle-tile-footer " + yearId}>More Info<i
+                                    className="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-2 col-sm-6">
+                        <div className="circle-tile ">
+                            <a href="#">
+                                <div className="circle-tile-heading dark-blue"><i
+                                    className="fas fa-user  fa-fw fa-3x"></i></div>
+                            </a>
+                            <div className="circle-tile-content dark-blue">
+                                <div className="circle-tile-description text-faded">Students</div>
+                                <div className="circle-tile-number text-faded ">
+                                    {relationsData.data.students.length}
                                 </div>
                                 <a onClick={this.getLinkNameInSideNavigation} id='year_classrooms'
                                    className={"btn circle-tile-footer " + yearId}>More Info<i

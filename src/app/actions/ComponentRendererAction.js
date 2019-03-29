@@ -4,9 +4,13 @@ export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch
     let componentToRender = '';
     let componentMetaData = 0;
     let yearId = 0;
+    let classroomId = 0;
     switch (elementId) {
         case 'all_users':
             componentToRender = 'AllUsers';
+            break;
+        case 'all_classrooms':
+            componentToRender = 'AllClassrooms';
             break;
         case 'Classrooms':
             componentToRender = 'Classrooms';
@@ -34,6 +38,11 @@ export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch
             yearId = elementClass.split(' ')[2];
             componentToRender = 'YearsClassrooms';
             componentMetaData = yearId;
+            break;
+        case 'classroom_info':
+            classroomId = elementClass.split(' ')[2];
+            componentToRender = 'ClassroomDetails';
+            componentMetaData = classroomId;
             break;
         default:
             componentToRender = 'InfoPage';
