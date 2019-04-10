@@ -79,7 +79,7 @@ class InfoPage extends Component {
                             <div className="circle-tile-content dark-blue">
                                 <div className="circle-tile-description text-faded">Semesters</div>
                                 <div className="circle-tile-number text-faded ">
-                                    {relationsData.data.students.length}
+                                    {relationsData.data.semesters.length}
                                 </div>
                                 <a onClick={this.getLinkNameInSideNavigation} id='year_semesters'
                                    className={"btn circle-tile-footer " + yearId}>More Info<i

@@ -1,99 +1,135 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {addClassroomToYear, removeClassroomFromYear} from '../../../actions/YearActions'
-import {getClassrooms} from '../../../actions/ClassroomsActions'
+import {addSemesterToYear, removeSemesterFromYear} from "../../../actions/YearActions"
+import {getSemesters} from "../../../actions/SemesterActions"
 
 class YearSemester extends Component {
-    constructor() {
-        super();
-        this.state = {
-            disableAddAll: false,
-            disableRemoveAll: false
-        }
-    }
     componentDidMount() {
-        this.getClassrooms()
+        this.getSemesters();
     }
 
-    getClassrooms = e => {
-        const {classrooms} = this.props.ClassroomsReducer;
-        if (classrooms.length == 0) {
-            this.props.getClassrooms('all');
+    getSemesters = e => {
+        const {semesters} = this.props.SemesterReducer;
+        if (semesters.length == 0) {
+            this.props.getSemesters('all');
         }
     };
 
-    addClassroomToYear = (e) => {
+    addSemesterToYear = (e) => {
         e.preventDefault();
-        if (e.currentTarget.id == 'attach_all_classrooms') {
-            console.log('aaa');
-            this.setState({disableAddAll: true})
-            this.setState({disableRemoveAll: false});
-        }
+        const start = this.refs['start' + e.currentTarget.id];
+        const end = this.refs['end' + e.currentTarget.id];
         const data = {
             yearId: this.props.ComponentRendererReducer.componentMetaData,
-            classroomId: e.currentTarget.id
+            semesterId: e.currentTarget.id,
+            startDate: start.value,
+            endDate: end.value
         };
-        this.props.addClassroomToYear(data);
+        this.props.addSemesterToYear(data);
     };
-    removeClassroomFromYear = (e) => {
+    removeSemesterFromYear = (e) => {
         e.preventDefault();
-        this.setState({disableAddAll: false});
-        this.setState({disableRemoveAll: true});
         const data = {
             yearId: this.props.ComponentRendererReducer.componentMetaData,
-            classroomId: e.currentTarget.id
+            semesterId: e.currentTarget.id
         };
-        this.props.removeClassroomFromYear(data);
+        this.props.removeSemesterFromYear(data);
     };
 
     render() {
         const yearInfoWithRelations = this.props.YearsReducer.relationsData;
-        const {classrooms} = this.props.ClassroomsReducer;
+        const {semesters} = this.props.SemesterReducer;
         const buttonStyle = {
             marginLeft: 142
         };
         return (
             <div className="row">
-                <div className="col-md-8">
-                    <h3>Attached Classrooms
-                        <button disabled={this.state.disableRemoveAll} style={buttonStyle} className="btn btn-danger" id='detach_all_classrooms'
-                                onClick={this.removeClassroomFromYear}>
-                            <span className="glyphicon glyphicon-minus"></span>
-                        </button>
-                    </h3>
+                <div className="col-md-6">
+                    <h3>Attached Semesters</h3>
                     <ol>
-                        {yearInfoWithRelations.data.classrooms.map((classroom) => (
-                            <li key={classroom.id} className="list-item">
-                                {classroom.name}
-                                <button style={buttonStyle} className="btn btn-danger" id={classroom.id}
-                                        onClick={this.removeClassroomFromYear}>
-                                    <span className="glyphicon glyphicon-minus"></span>
-                                </button>
+                        {yearInfoWithRelations.data.semesters.map((semester) => (
+                            <li key={semester.id} className="list-item">
+                                <p>{semester.name.charAt(0).toUpperCase() + semester.name.slice(1)} Semester</p>
+                                <form id={semester.id} className="form-horizontal" role="form">
+                                    <div className="form-group">
+                                        <div className="col-md-12">
+                                            <div className="form-group row">
+                                                <div className="col-md-5">
+                                                    <label htmlFor="inputKey"
+                                                           className="col-md-1 control-label">Start</label>
+                                                    <input ref={'start' + semester.id} type="date"
+                                                           className="form-control"
+                                                           defaultValue={semester.pivot.start_date}/>
+                                                </div>
+                                                <div className="col-md-5">
+                                                    <label htmlFor="inputValue"
+                                                           className="col-md-1 control-label">End</label>
+                                                    <input ref={'end' + semester.id} type="date"
+                                                           className="form-control"
+                                                           defaultValue={semester.pivot.end_date}/>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <button className="btn btn-danger"
+                                                            id={semester.id}
+                                                            onClick={this.removeSemesterFromYear}>
+                                                        <span className="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <p style={{color: 'red'}} ref={'errorSaving' + semester.id}></p>
+                                        </div>
+                                    </div>
+                                </form>
                                 <hr/>
                             </li>
                         ))}
                     </ol>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-1" style={{borderLeft: '1px solid black', height: '500px'}}></div>
+                <div className="col-md-5">
                     <div className="list-group">
                         <a href="#" className="list-group-item list-group-item-action active">
-                            Classrooms
-                            <button disabled={this.state.disableAddAll} onClick={this.addClassroomToYear} style={buttonStyle} className="btn btn-success"
-                                    id="attach_all_classrooms">
-                                <span className="glyphicon glyphicon-plus"></span>
-                            </button>
+                            Semesters
                         </a>
-                        {classrooms.map((classroom) => (
-                                yearInfoWithRelations.data.classrooms.some(obj => obj.id === classroom.id) == false ?
-                                    <div key={classroom.id} className="list-group-item justify-content-between">
-                                        {classroom.name}
-                                        <button style={buttonStyle} className="btn btn-success" id={classroom.id}
-                                                onClick={this.addClassroomToYear}>
-                                            <span className="glyphicon glyphicon-plus"></span>
-                                        </button>
-                                    </div> : ''
-                            )
-                        )}
+                        {semesters.length > 0 ?
+                            semesters.map((semester) => (
+                                    yearInfoWithRelations.data.semesters.some(obj => obj.id === semester.id) == false ?
+                                        <div key={semester.id} className="form-group">
+                                            <h4 style={{color: 'red'}}>{semester.name.charAt(0).toUpperCase() + semester.name.slice(1)}
+                                                Semester</h4>
+                                            <form id={semester.id} className="form-horizontal" role="form">
+                                                <div className="form-group">
+                                                    <div className="col-md-12">
+                                                        <div className="form-group row">
+                                                            <div className="col-md-5">
+                                                                <label htmlFor="inputKey"
+                                                                       className="col-md-1 control-label">Start</label>
+                                                                <input ref={'start' + semester.id} type="date"
+                                                                       className="form-control"/>
+                                                            </div>
+                                                            <div className="col-md-5">
+                                                                <label htmlFor="inputValue"
+                                                                       className="col-md-1 control-label">End</label>
+                                                                <input ref={'end' + semester.id} type="date"
+                                                                       className="form-control"/>
+                                                            </div>
+                                                            <div className="col-md-2">
+                                                                <label className="col-md-1">ff</label>
+                                                                <button className="btn btn-success"
+                                                                        id={semester.id}
+                                                                        onClick={this.addSemesterToYear}>Save
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <p style={{color: 'red'}} ref={'errorSaving' + semester.id}></p>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <hr/>
+                                        </div> : ''
+                                )
+                            ) : ''}
                     </div>
                 </div>
             </div>
@@ -104,10 +140,10 @@ class YearSemester extends Component {
 const mapStateToProps = state => ({
     YearsReducer: state.YearsReducer,
     ComponentRendererReducer: state.ComponentRendererReducer,
-    ClassroomsReducer: state.ClassroomsReducer
+    SemesterReducer: state.SemesterReducer
 });
 
 export default connect(
     mapStateToProps,
-    {addClassroomToYear, removeClassroomFromYear,getClassrooms}
+    {addSemesterToYear, removeSemesterFromYear, getSemesters}
 )(YearSemester);

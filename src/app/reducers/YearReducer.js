@@ -1,7 +1,10 @@
 import {
     ADD_CLASSROOM_TO_YEAR,
+    ADD_SEMESTER_TO_YEAR,
     DETACH_CLASSROOM_FROM_YEAR,
-    GET_ALL_YEARS, GET_ALL_YEARS_PAGINATION,
+    DETACH_SEMESTER_FROM_YEAR,
+    GET_ALL_YEARS,
+    GET_ALL_YEARS_PAGINATION,
     GET_YEAR_RELATIONS_DATA
 } from '../actions/types';
 import update from 'react-addons-update';
@@ -41,8 +44,19 @@ export default function (state = initialState, action) {
                     }
                 }
             });
+        case ADD_SEMESTER_TO_YEAR:
+            return update(state, {
+                relationsData: {
+                    data: {
+                        semesters: {
+                            $push: typeof action.payload.length === 'undefined' && state.relationsData.data.semesters.some(obj => obj.id === action.payload.id) == false
+                                ? [action.payload]
+                                : typeof action.payload.length !== 'undefined' ? [...action.payload] : []
+                        }
+                    }
+                }
+            });
         case DETACH_CLASSROOM_FROM_YEAR:
-
             return update(state, {
                 relationsData: {
                     data: {
@@ -50,6 +64,19 @@ export default function (state = initialState, action) {
                             $set:
                                 typeof action.payload.data != 'object' ?
                                     state.relationsData.data.classrooms.filter(classroom => classroom.id != action.payload.data) :
+                                    []
+                        }
+                    }
+                }
+            });
+        case DETACH_SEMESTER_FROM_YEAR:
+            return update(state, {
+                relationsData: {
+                    data: {
+                        semesters: {
+                            $set:
+                                typeof action.payload.data != 'object' ?
+                                    state.relationsData.data.semesters.filter(classroom => classroom.id != action.payload.data) :
                                     []
                         }
                     }
