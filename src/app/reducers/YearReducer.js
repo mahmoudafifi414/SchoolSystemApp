@@ -1,6 +1,7 @@
 import {
     ADD_CLASSROOM_TO_YEAR,
     ADD_SEMESTER_TO_YEAR,
+    ADD_YEAR,
     DETACH_CLASSROOM_FROM_YEAR,
     DETACH_SEMESTER_FROM_YEAR,
     GET_ALL_YEARS,
@@ -12,7 +13,8 @@ import update from 'react-addons-update';
 const initialState = {
     yearsPagination: [],
     years: [],
-    relationsData: []
+    relationsData: [],
+    msg: ''
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +33,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 relationsData: action.payload
+            };
+        case ADD_YEAR:
+            return {
+                ...state,
+                msg: action.payload
             };
         case ADD_CLASSROOM_TO_YEAR:
             return update(state, {

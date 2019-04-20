@@ -1,14 +1,24 @@
 import {
     ADD_CLASSROOM_TO_YEAR,
     ADD_SEMESTER_TO_YEAR,
+    ADD_YEAR,
     DETACH_CLASSROOM_FROM_YEAR,
+    DETACH_SEMESTER_FROM_YEAR,
     GET_ALL_YEARS,
     GET_ALL_YEARS_PAGINATION,
-    GET_YEAR_RELATIONS_DATA,
-    DETACH_SEMESTER_FROM_YEAR
+    GET_YEAR_RELATIONS_DATA
 } from "./types"
 import axios from 'axios'
 
+export const addYear = (data) => dispatch => {
+    axios.post('http://localhost:8000/api/year', data).then(res => {
+            dispatch({
+                type: ADD_YEAR,
+                payload: res.data.msg
+            })
+        }
+    );
+};
 export const getAllYears = (numberPerPage = 10) => dispatch => {
     axios.get('http://localhost:8000/api/year' + '/' + (isNaN(numberPerPage) ? '' : numberPerPage)).then(res => {
             dispatch({

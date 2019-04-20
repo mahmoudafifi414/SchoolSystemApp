@@ -49,6 +49,12 @@ export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch
             componentToRender = 'YearSemester';
             componentMetaData = yearId;
             break;
+        case 'add_edit_year':
+            componentToRender = 'AddEditYear';
+            break;
+        case 'add_edit_year':
+            componentToRender = 'AddEditSemester';
+            break;
         default:
             componentToRender = 'InfoPage';
             break;

@@ -1,8 +1,9 @@
-import {GET_ALL_SEMESTRES, GET_SEMESTERS_PAGINATION} from '../actions/types';
+import {ADD_SEMESETR, GET_ALL_SEMESTRES, GET_SEMESTERS_PAGINATION} from '../actions/types';
 
 const initialState = {
     semesters: [],
-    semestersPagination: []
+    semestersPagination: [],
+    msg: ''
 };
 
 export default function (state = initialState, action) {
@@ -16,6 +17,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 semesters: action.payload
+            };
+        case ADD_SEMESETR:
+            return {
+                ...state,
+                msg: action.payload
             };
         default:
             return state;

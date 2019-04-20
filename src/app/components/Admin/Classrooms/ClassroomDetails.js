@@ -125,6 +125,18 @@ class ClassroomDetails extends Component {
                             </div>
                             <div className="row">
                                 <div className="col-md-12">
+                                    <div className="form-group col-md-4">
+                                        <label>Display Options</label>
+                                        <select onChange={this.changeOption} className="form-control"
+                                                defaultValue={classroomId}>
+                                            <option></option>
+                                            {this.state.displayOptionDisplay ?
+                                                this.state.displayOptions.map((option) => (
+                                                    <option key={option} value={option}>{option}</option>
+                                                )) : ''
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>

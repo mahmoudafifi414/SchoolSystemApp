@@ -1,5 +1,8 @@
 import axios from 'axios';
-import {GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION,GET_RELATED_YEARS,GET_RELATED_FILTER_DATA} from "./types"
+import {
+    GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_YEARS, GET_RELATED_FILTER_DATA,
+    GET_CLASROOM_RELATIONS_DATA
+} from "./types"
 
 export const getClassrooms = (numberPerPage = 10) => dispatch => {
     axios.get('http://localhost:8000/api/classroom' + '/' + (isNaN(numberPerPage) ? '' : numberPerPage)).then(res =>
@@ -14,6 +17,14 @@ export const updatePaginationData = (apiLink, paginationNumber) => dispatch => {
         dispatch({
             type: GET_CLASSROOMS_PAGINATION,
             payload: res.data.classrooms
+        })
+    );
+};
+export const getRelationData = (classroomId) => dispatch => {
+    axios.get('http://localhost:8000/api/classroom/get-relations-data/' + classroomId).then(res =>
+        dispatch({
+            type: GET_CLASROOM_RELATIONS_DATA,
+            payload: res.data
         })
     );
 };

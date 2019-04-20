@@ -1,6 +1,14 @@
-import {GET_ALL_SEMESTRES,GET_SEMESTERS_PAGINATION} from "./types"
+import {ADD_SEMESETR, GET_ALL_SEMESTRES, GET_SEMESTERS_PAGINATION} from "./types"
 import axios from 'axios'
 
+export const addSemester = (data) => dispatch => {
+    axios.post('http://localhost:8000/api/semester', data).then(res =>
+        dispatch({
+            type: ADD_SEMESETR,
+            payload: res.data.msg
+        })
+    );
+};
 export const getSemesters = (numberPerPage = 10) => dispatch => {
     axios.get('http://localhost:8000/api/semester' + '/' + (isNaN(numberPerPage) ? '' : numberPerPage)).then(res =>
         dispatch({
@@ -16,4 +24,4 @@ export const updatePaginationData = (apiLink, paginationNumber) => dispatch => {
             payload: res.data.semesters
         })
     );
-}
+};

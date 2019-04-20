@@ -1,10 +1,11 @@
-import {GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_FILTER_DATA, GET_RELATED_YEARS} from "../actions/types"
+import {GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_FILTER_DATA, GET_RELATED_YEARS,GET_CLASROOM_RELATIONS_DATA} from "../actions/types"
 
 const initialState = {
     classrooms: [],
     classroomsPagination: [],
     relatedYears: [],
-    filteredData: []
+    filteredData: [],
+    relationsData: []
 };
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -22,6 +23,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 relatedYears: action.payload
+            };
+        case GET_CLASROOM_RELATIONS_DATA:
+            return {
+                ...state,
+                relationsData: action.payload
             };
         case GET_RELATED_FILTER_DATA:
             return {

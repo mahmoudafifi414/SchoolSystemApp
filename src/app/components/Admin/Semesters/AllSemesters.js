@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import {connect} from 'react-redux'
-import {getAllSemesters,updatePaginationData} from "../../../actions/SemesterActions";
+import {getSemesters,updatePaginationData} from "../../../actions/SemesterActions";
 
 class AllSemesters extends Component {
     componentDidMount() {
@@ -8,8 +8,8 @@ class AllSemesters extends Component {
     }
 
     getAllSemesters = e => {
-        this.props.getAllSemesters(typeof e !== 'undefined' ? e.target.value : null);
-    }
+        this.props.getSemesters(typeof e !== 'undefined' ? e.target.value : null);
+    };
     updatePaginationData = e => {
         e.preventDefault();
         const urlLinkForApi = this.props.SemesterReducer.getAllSemesters.first_page_url.split("?");
@@ -72,5 +72,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getAllSemesters,updatePaginationData}
+    {getSemesters,updatePaginationData}
 )(AllSemesters);

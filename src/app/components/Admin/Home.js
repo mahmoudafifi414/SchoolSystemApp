@@ -7,7 +7,12 @@ import InfoPage from './Years/InfoPage'
 import YearsClassrooms from './Years/YearsClassrooms'
 import AllClassrooms from "./Classrooms/AllClassrooms";
 import ClassroomDetails from "./Classrooms/ClassroomDetails";
+import ClassroomInfoPage from "./Classrooms/ClassroomInfoPage";
 import YearSemester from "./Years/YearSemester";
+import AddEditYear from "./Years/AddEditYear";
+import AddEditSemester from "./Semesters/AddEditSemester";
+import AllSemesters from "./Semesters/AllSemesters";
+
 
 class Home extends Component {
     render() {
@@ -18,7 +23,11 @@ class Home extends Component {
             YearsClassrooms: YearsClassrooms,
             AllClassrooms: AllClassrooms,
             ClassroomDetails: ClassroomDetails,
-            YearSemester: YearSemester
+            YearSemester: YearSemester,
+            AddEditYear:AddEditYear,
+            AddEditSemester:AddEditSemester,
+            AllSemesters:AllSemesters,
+            ClassroomInfoPage:ClassroomInfoPage
         };
         const {componentToRender} = this.props.ComponentRendererReducer;
         const Component = Components[componentToRender];

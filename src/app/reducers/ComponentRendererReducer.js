@@ -1,7 +1,7 @@
 import {SET_COMPONENT} from '../actions/types';
 
 const initialState = {
-    componentToRender: 'AllYears',
+    componentToRender: 'AllClassrooms',
     componentMetaData: 0
 };
 
