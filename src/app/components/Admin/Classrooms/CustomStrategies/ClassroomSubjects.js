@@ -6,4 +6,5 @@ class ClassroomSubjects extends Component{
        return(<h1>Hello subjects</h1>);
    }
 }
+
 export default ClassroomSubjects
