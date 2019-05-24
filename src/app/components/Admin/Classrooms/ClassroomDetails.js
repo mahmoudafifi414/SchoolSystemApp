@@ -2,12 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getClassrooms, getRelatedFilterData, getRelatedYears} from "../../../actions/ClassroomsActions";
 import FilterDisplayBuilder from './FilterDisplayBuilder'
+import ClassroomSubjects from "./CustomStrategies/ClassroomSubjects";
 
 class ClassroomDetails extends Component {
     constructor(props) {
         super();
         this.state = {
             displayOptions: ['Students', 'Subjects', 'Teachers'],
+            currentOption: '',
             data: {classroomId: props.ComponentRendererReducer.componentMetaData},
             displayOptionDisplay: false
         }
@@ -40,20 +42,7 @@ class ClassroomDetails extends Component {
             this.props.getClassrooms('all');
         }
     };
-    changeOption = (e) => {
-        const that = this;
-        const selectedOption = e.currentTarget.value;
-        this.setState(prevState => ({
-            data: {
-                ...prevState.data,
-                optionName: selectedOption
-            }
-        }));
-        setTimeout(function () {
-            that.props.getRelatedFilterData(that.state.data)
-        }, 0)
 
-    };
     changeYear = (e) => {
         const that = this;
         const selectedOption = e.currentTarget.value;
@@ -73,6 +62,22 @@ class ClassroomDetails extends Component {
                 yearId: selectedOption
             }
         }));
+        setTimeout(function () {
+            that.props.getRelatedFilterData(that.state.data)
+        }, 0)
+    };
+    changeAction = (e) => {
+        const that = this;
+        const selectedOption = e.currentTarget.value;
+        if (selectedOption) {
+            this.setState(prevState => ({
+                data: {
+                    ...prevState.data,
+                    optionName: selectedOption
+                }
+            }));
+            this.setState({currentOption: selectedOption});
+        }
         setTimeout(function () {
             that.props.getRelatedFilterData(that.state.data)
         }, 0)
@@ -111,23 +116,7 @@ class ClassroomDetails extends Component {
                                     </div>
                                     <div className="form-group col-md-4">
                                         <label>Display Options</label>
-                                        <select onChange={this.changeOption} className="form-control"
-                                                defaultValue={classroomId}>
-                                            <option></option>
-                                            {this.state.displayOptionDisplay ?
-                                                this.state.displayOptions.map((option) => (
-                                                    <option key={option} value={option}>{option}</option>
-                                                )) : ''
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="form-group col-md-4">
-                                        <label>Display Options</label>
-                                        <select onChange={this.changeOption} className="form-control"
+                                        <select onChange={this.changeAction} className="form-control"
                                                 defaultValue={classroomId}>
                                             <option></option>
                                             {this.state.displayOptionDisplay ?
@@ -143,7 +132,9 @@ class ClassroomDetails extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <FilterDisplayBuilder data={this.state.data}/>
+                            {this.state.data.optionName != 'Subjects' ?
+                                <FilterDisplayBuilder data={this.state.data}/> :<ClassroomSubjects/>
+                            }
                         </div>
                     </div>
                 </div>

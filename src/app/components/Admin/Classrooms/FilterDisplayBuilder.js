@@ -3,14 +3,14 @@ import {connect} from 'react-redux'
 import {getRelatedFilterData} from '../../../actions/ClassroomsActions'
 
 class FilterDisplayBuilder extends Component {
+    constructor(props) {
+        super();
+    }
+
     componentDidMount = () => {
         const data = this.props.data;
         this.props.getRelatedFilterData(data)
     };
-
-    constructor(props) {
-        super()
-    }
 
     render() {
         const {filteredData} = this.props.ClassroomsReducer;
