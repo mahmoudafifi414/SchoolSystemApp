@@ -1,0 +1,25 @@
+h1 {
+    text-align: center;
+}
+
+.row-divided {
+    position: relative;
+}
+
+.row-divided > [class^="col-"],
+.row-divided > [class*=" col-"] {
+    padding-left: 30px; /* gutter width (give a little extra room) 2x default */
+    padding-right: 30px; /* gutter width (give a little extra room) 2x default */
+}
+
+
+/* just to set different column heights - not needed to function */
+.column-main {
+    height: 300px;
+    background-color: #F7F3FF;
+}
+
+.column-th {
+    height: 300px;
+    background-color: #F7F3FF;
+}

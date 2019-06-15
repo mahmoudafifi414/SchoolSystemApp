@@ -1,9 +1,11 @@
-import {GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_FILTER_DATA, GET_RELATED_YEARS,GET_CLASROOM_RELATIONS_DATA} from "../actions/types"
+import {GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_FILTER_DATA, GET_RELATED_YEARS,GET_CLASROOM_RELATIONS_DATA,GET_RELATED_SEMESTER,GET_RELATED_SUBJECTS} from "../actions/types"
 
 const initialState = {
     classrooms: [],
     classroomsPagination: [],
     relatedYears: [],
+    relatedSemesters: [],
+    relatedSubjects: [],
     filteredData: [],
     relationsData: []
 };
@@ -28,6 +30,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 relationsData: action.payload
+            };
+        case GET_RELATED_SEMESTER:
+            return {
+                ...state,
+                relatedSemesters: action.payload
+            };
+        case GET_RELATED_SUBJECTS:
+            return {
+                ...state,
+                relatedSubjects: action.payload
             };
         case GET_RELATED_FILTER_DATA:
             return {

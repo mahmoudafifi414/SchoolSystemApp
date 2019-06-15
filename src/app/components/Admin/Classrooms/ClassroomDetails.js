@@ -1,17 +1,24 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getClassrooms, getRelatedFilterData, getRelatedYears} from "../../../actions/ClassroomsActions";
+import {
+    getClassrooms,
+    getRelatedFilterData,
+    getRelatedYears,
+    getRelatedSemesters,
+    getRelatedSubjects
+} from "../../../actions/ClassroomsActions";
 import FilterDisplayBuilder from './FilterDisplayBuilder'
 import ClassroomSubjects from "./CustomStrategies/ClassroomSubjects";
 
 class ClassroomDetails extends Component {
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             displayOptions: ['Students', 'Subjects', 'Teachers'],
             currentOption: '',
             data: {classroomId: props.ComponentRendererReducer.componentMetaData},
-            displayOptionDisplay: false
+            displayOptionDisplay: false,
+            selectedSemester: ''
         }
 
     }
@@ -20,12 +27,14 @@ class ClassroomDetails extends Component {
         this.getClassrooms();
         const classroomId = this.props.ComponentRendererReducer.componentMetaData;
         this.props.getRelatedYears(classroomId);
+        this.props.getRelatedSemesters(classroomId);
     }
 
-    getRelatedYears = e => {
+    getRelatedYearsAndSemesters = e => {
         const that = this;
         const selectedOption = e.currentTarget.value;
         this.props.getRelatedYears(selectedOption);
+        this.props.getRelatedSemesters(selectedOption);
         this.setState(prevState => ({
             data: {
                 ...prevState.data,
@@ -82,10 +91,15 @@ class ClassroomDetails extends Component {
             that.props.getRelatedFilterData(that.state.data)
         }, 0)
     };
+    changeSemester = (e) => {
+        const selectedOption = e.currentTarget.value;
+        this.setState({selectedSemester: selectedOption});
+    };
 
     render() {
         const {classrooms} = this.props.ClassroomsReducer;
         const {relatedYears} = this.props.ClassroomsReducer;
+        const {relatedSemesters} = this.props.ClassroomsReducer;
         const classroomId = this.props.ComponentRendererReducer.componentMetaData;
         if (typeof classrooms !== 'undefined' && relatedYears.hasOwnProperty('years')) {
             return (
@@ -96,7 +110,7 @@ class ClassroomDetails extends Component {
                                 <div className="col-md-12">
                                     <div className="form-group col-md-4">
                                         <label>Classroom</label>
-                                        <select onChange={this.getRelatedYears} className="form-control"
+                                        <select onChange={this.getRelatedYearsAndSemesters} className="form-control"
                                                 defaultValue={classroomId}>
                                             {classrooms.map((classroom) => (
                                                 <option key={classroom.id}
@@ -133,7 +147,8 @@ class ClassroomDetails extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             {this.state.data.optionName != 'Subjects' ?
-                                <FilterDisplayBuilder data={this.state.data}/> :<ClassroomSubjects/>
+                                <FilterDisplayBuilder data={this.state.data}/> :
+                                <ClassroomSubjects relatedSemesters={relatedSemesters}/>
                             }
                         </div>
                     </div>
@@ -153,5 +168,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getClassrooms, getRelatedYears, getRelatedFilterData}
+    {getClassrooms, getRelatedYears, getRelatedFilterData, getRelatedSemesters,getRelatedSubjects}
 )(ClassroomDetails);
