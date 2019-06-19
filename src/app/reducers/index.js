@@ -5,12 +5,14 @@ import SemesterReducer from "./SemesterReducer";
 import YearReducer from "./YearReducer";
 import ComponentRendererReducer from "./ComponentRendererReducer";
 import ClassroomsReducer from "./ClassroomsReducer";
+import SubjectReducer from "./SubjectReducer";
 
 export default combineReducers({
     phoneNumbers: PhoneReducer,
     UserReducer: UserReducer,
     SemesterReducer: SemesterReducer,
     YearsReducer: YearReducer,
-    ClassroomsReducer:ClassroomsReducer,
-    ComponentRendererReducer: ComponentRendererReducer
+    ClassroomsReducer: ClassroomsReducer,
+    ComponentRendererReducer: ComponentRendererReducer,
+    SubjectReducer: SubjectReducer
 });

@@ -30,6 +30,7 @@ class ClassroomDetails extends Component {
         this.props.getRelatedSemesters(classroomId);
     }
 
+
     getRelatedYearsAndSemesters = e => {
         const that = this;
         const selectedOption = e.currentTarget.value;
@@ -86,6 +87,9 @@ class ClassroomDetails extends Component {
                 }
             }));
             this.setState({currentOption: selectedOption});
+        }
+        if (selectedOption == 'Subjects') {
+            this.props.getRelatedSubjects(this.state.data.classroomId, this.state.data.yearId);
         }
         setTimeout(function () {
             that.props.getRelatedFilterData(that.state.data)
@@ -168,5 +172,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getClassrooms, getRelatedYears, getRelatedFilterData, getRelatedSemesters,getRelatedSubjects}
+    {getClassrooms, getRelatedYears, getRelatedFilterData, getRelatedSemesters, getRelatedSubjects}
 )(ClassroomDetails);
