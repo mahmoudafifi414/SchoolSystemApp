@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_YEARS, GET_RELATED_FILTER_DATA,
-    GET_CLASROOM_RELATIONS_DATA,GET_RELATED_SEMESTER,GET_RELATED_SUBJECTS
+    GET_CLASROOM_RELATIONS_DATA, GET_RELATED_SEMESTER, GET_RELATED_SUBJECTS, ATTACH_SUBJECT_TO_SEMESTER
 } from "./types"
 
 export const getClassrooms = (numberPerPage = 10) => dispatch => {
@@ -59,4 +59,12 @@ export const getRelatedFilterData = (data) => dispatch => {
             payload: res.data.data
         })
     });
+};
+export const attachSubjectToSemester = (data) => {
+    axios.post('http://localhost:8000/api/semester/attachSubjectToSemester', data).then(res =>
+        dispatch({
+            type: ATTACH_SUBJECT_TO_SEMESTER,
+            payload: res.data.semesters
+        })
+    );
 };

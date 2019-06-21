@@ -1,4 +1,4 @@
-import {ADD_SEMESETR, GET_ALL_SEMESTRES, GET_SEMESTERS_PAGINATION} from "./types"
+import {ADD_SEMESETR, GET_ALL_SEMESTRES, GET_SEMESTERS_PAGINATION,ATTACH_SUBJECT_TO_SEMESTER} from "./types"
 import axios from 'axios'
 
 export const addSemester = (data) => dispatch => {

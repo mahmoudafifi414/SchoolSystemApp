@@ -5,6 +5,12 @@ import {Modal} from 'react-bootstrap'
 import {
     getSubjects
 } from "../../../../actions/SubjectActions";
+import {
+    compareArrayDiff
+} from "../../../../Helpers";
+import {
+    attachSubjectToSemester
+} from "../../../../actions/ClassroomsActions";
 
 class ClassroomSubjects extends Component {
     constructor(props) {
@@ -16,9 +22,26 @@ class ClassroomSubjects extends Component {
     }
 
     componentDidMount() {
+        this.checkedSubjects = new Set();
         this.props.getSubjects('all');
     }
 
+    handleChangedSubjectsCheckbox = (e) => {
+        if (!this.checkedSubjects.has(e.currentTarget.value)) {
+            this.checkedSubjects.add(e.currentTarget.value);
+        }
+    };
+    attachSubjectToSemester = (e) => {
+        const data = {
+            'yearId': this.props.yearId,
+            'classroomId': this.props.classroomId,
+            'semesterId': this.state.semesterId,
+            'subjectIds': this.checkedSubjects
+        };
+        console.log(data);
+        //this.props.attachSubjectToSemester()
+        this.handleClose(e);
+    };
     handleClose = (e) => {
         this.setState({showModal: false});
     };
@@ -39,12 +62,14 @@ class ClassroomSubjects extends Component {
                         <div key={semester.id}
                              className={"col-xs-" + Math.floor(12 / this.props.relatedSemesters.length) + " column-th"}>
                             <h4>{semester.name}
-                                <button onClick={this.handleShow} id={semester.id} className="btn btn-default"> Add
-                                    Subject
-                                </button>
+                                <span className="buttonSpan">
+                                    <button onClick={this.handleShow} id={semester.id} className="btn btn-default"> Add
+                                        Subject
+                                    </button>
+                                </span>
                             </h4>
-                            {relatedSubjects.filter(subject => subject.semester_id == semester.id).map((subject) => (
-                                <h4 key={subject.id}>{subject.name}</h4>
+                            {relatedSubjects.filter(subject => subject.semester_id == semester.id).map((subject, index) => (
+                                <h4 key={subject.id}>{index + 1} - {subject.name}</h4>
                             ))}
                         </div>
                     ))}
@@ -61,13 +86,18 @@ class ClassroomSubjects extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {subjects.filter(subject => subject.semester_id != this.state.semesterId).map((subject) => (
+                        {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).map((subject) => (
                             <div key={subject.id}>
-                                <input type="checkbox" name="subjects" value={subject.id}/>
+                                <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox" name="subjects" value={subject.id}/>
                                 <label>{subject.name}</label>
                             </div>
                         ))}
                     </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-primary" onClick={this.attachSubjectToSemester}>
+                            Save Changes
+                        </button>
+                    </Modal.Footer>
                 </Modal>
             </div>
 
@@ -83,5 +113,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getSubjects}
+    {getSubjects, attachSubjectToSemester}
 )(ClassroomSubjects);

@@ -1,4 +1,14 @@
-import {GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_FILTER_DATA, GET_RELATED_YEARS,GET_CLASROOM_RELATIONS_DATA,GET_RELATED_SEMESTER,GET_RELATED_SUBJECTS} from "../actions/types"
+import {
+    GET_CLASSROOMS,
+    GET_CLASSROOMS_PAGINATION,
+    GET_RELATED_FILTER_DATA,
+    GET_RELATED_YEARS,
+    GET_CLASROOM_RELATIONS_DATA,
+    GET_RELATED_SEMESTER,
+    GET_RELATED_SUBJECTS,
+    ATTACH_SUBJECT_TO_SEMESTER
+} from "../actions/types"
+import update from "react-addons-update";
 
 const initialState = {
     classrooms: [],
@@ -46,6 +56,14 @@ export default function (state = initialState, action) {
                 ...state,
                 filteredData: action.payload
             };
+        case ATTACH_SUBJECT_TO_SEMESTER:
+            return update(state, {
+                relatedSubjects: {
+                        $push: typeof action.payload.length === 'undefined' && state.relatedSubjects.some(obj => obj.id === action.payload.id) == false
+                            ? [action.payload]
+                            : typeof action.payload.length !== 'undefined' ? [...action.payload] : []
+                }
+            });
         default:
             return state;
     }

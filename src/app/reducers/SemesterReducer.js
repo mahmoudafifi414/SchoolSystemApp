@@ -1,4 +1,8 @@
-import {ADD_SEMESETR, GET_ALL_SEMESTRES, GET_SEMESTERS_PAGINATION} from '../actions/types';
+import {
+    ADD_SEMESETR,
+    GET_ALL_SEMESTRES,
+    GET_SEMESTERS_PAGINATION
+} from '../actions/types';
 
 const initialState = {
     semesters: [],
@@ -23,6 +27,7 @@ export default function (state = initialState, action) {
                 ...state,
                 msg: action.payload
             };
+
         default:
             return state;
     }

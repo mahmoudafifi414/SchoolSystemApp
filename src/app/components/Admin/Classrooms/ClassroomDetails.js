@@ -152,7 +152,9 @@ class ClassroomDetails extends Component {
                         <div className="col-md-12">
                             {this.state.data.optionName != 'Subjects' ?
                                 <FilterDisplayBuilder data={this.state.data}/> :
-                                <ClassroomSubjects relatedSemesters={relatedSemesters}/>
+                                <ClassroomSubjects classroomId={this.state.data.classroomId}
+                                                   yearId={this.state.data.yearId}
+                                                   relatedSemesters={relatedSemesters}/>
                             }
                         </div>
                     </div>
