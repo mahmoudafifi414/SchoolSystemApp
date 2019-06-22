@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_YEARS, GET_RELATED_FILTER_DATA,
-    GET_CLASROOM_RELATIONS_DATA, GET_RELATED_SEMESTER, GET_RELATED_SUBJECTS, ATTACH_SUBJECT_TO_SEMESTER
+    GET_CLASROOM_RELATIONS_DATA, GET_RELATED_SEMESTER, GET_RELATED_SUBJECTS, ATTACH_SUBJECT_TO_SEMESTER,DETACH_SUBJECT_TO_SEMESTER
 } from "./types"
 
 export const getClassrooms = (numberPerPage = 10) => dispatch => {
@@ -44,8 +44,8 @@ export const getRelatedSemesters = (classroomId) => dispatch => {
         })
     });
 };
-export const getRelatedSubjects = (classroomId,yearId) => dispatch => {
-    axios.get('http://localhost:8000/api/classroom/get-related-subjects/' + classroomId+'/'+yearId).then(res => {
+export const getRelatedSubjects = (classroomId, yearId) => dispatch => {
+    axios.get('http://localhost:8000/api/classroom/get-related-subjects/' + classroomId + '/' + yearId).then(res => {
         dispatch({
             type: GET_RELATED_SUBJECTS,
             payload: res.data.data
@@ -53,18 +53,26 @@ export const getRelatedSubjects = (classroomId,yearId) => dispatch => {
     });
 };
 export const getRelatedFilterData = (data) => dispatch => {
-    axios.post('http://localhost:8000/api/classroom/get-display-option-data',data).then(res => {
+    axios.post('http://localhost:8000/api/classroom/get-display-option-data', data).then(res => {
         dispatch({
             type: GET_RELATED_FILTER_DATA,
             payload: res.data.data
         })
     });
 };
-export const attachSubjectToSemester = (data) => {
-    axios.post('http://localhost:8000/api/semester/attachSubjectToSemester', data).then(res =>
+export const attachSubjectToSemester = (data) => dispatch => {
+    axios.post('http://localhost:8000/api/classroom/attachSubjectToSemester', data).then(res =>
         dispatch({
             type: ATTACH_SUBJECT_TO_SEMESTER,
-            payload: res.data.semesters
+            payload: res.data.data
+        })
+    );
+};
+export const detachSubjectToSemester = (data) => dispatch => {
+    axios.post('http://localhost:8000/api/classroom/detachSubjectToSemester', data).then(res =>
+        dispatch({
+            type: DETACH_SUBJECT_TO_SEMESTER,
+            payload: res.data.data
         })
     );
 };

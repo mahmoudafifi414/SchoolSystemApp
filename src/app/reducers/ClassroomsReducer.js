@@ -6,7 +6,8 @@ import {
     GET_CLASROOM_RELATIONS_DATA,
     GET_RELATED_SEMESTER,
     GET_RELATED_SUBJECTS,
-    ATTACH_SUBJECT_TO_SEMESTER
+    ATTACH_SUBJECT_TO_SEMESTER,
+    DETACH_SUBJECT_TO_SEMESTER, DETACH_CLASSROOM_FROM_YEAR
 } from "../actions/types"
 import update from "react-addons-update";
 
@@ -59,9 +60,18 @@ export default function (state = initialState, action) {
         case ATTACH_SUBJECT_TO_SEMESTER:
             return update(state, {
                 relatedSubjects: {
-                        $push: typeof action.payload.length === 'undefined' && state.relatedSubjects.some(obj => obj.id === action.payload.id) == false
-                            ? [action.payload]
-                            : typeof action.payload.length !== 'undefined' ? [...action.payload] : []
+                    $push: typeof action.payload.length === 'undefined' && state.relatedSubjects.some(obj => obj.id === action.payload.id) == false
+                        ? [action.payload]
+                        : typeof action.payload.length !== 'undefined' ? [...action.payload] : []
+                }
+            });
+        case DETACH_CLASSROOM_FROM_YEAR:
+            return update(state, {
+                relatedSubjects: {
+                    $set:
+                        typeof action.payload.data != 'object' ?
+                            state.relationsData.filter(subject => subject.id != action.payload.data) :
+                            []
                 }
             });
         default:

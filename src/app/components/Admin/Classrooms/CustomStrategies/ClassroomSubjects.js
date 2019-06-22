@@ -9,7 +9,8 @@ import {
     compareArrayDiff
 } from "../../../../Helpers";
 import {
-    attachSubjectToSemester
+    attachSubjectToSemester,
+    detachSubjectToSemester
 } from "../../../../actions/ClassroomsActions";
 
 class ClassroomSubjects extends Component {
@@ -27,22 +28,40 @@ class ClassroomSubjects extends Component {
     }
 
     handleChangedSubjectsCheckbox = (e) => {
-        if (!this.checkedSubjects.has(e.currentTarget.value)) {
+        if (this.checkedSubjects.has(e.currentTarget.value)) {
+            this.checkedSubjects.delete(e.currentTarget.value);
+        } else {
             this.checkedSubjects.add(e.currentTarget.value);
         }
     };
     attachSubjectToSemester = (e) => {
         const data = {
-            'yearId': this.props.yearId,
-            'classroomId': this.props.classroomId,
-            'semesterId': this.state.semesterId,
-            'subjectIds': this.checkedSubjects
+            yearId: this.props.yearId,
+            classroomId: this.props.classroomId,
+            semesterId: this.state.semesterId,
+            subjectIds: [...this.checkedSubjects]
         };
-        console.log(data);
-        //this.props.attachSubjectToSemester()
+        setTimeout(() => {
+            this.props.attachSubjectToSemester(data);
+        }, 0);
+        this.handleClose(e);
+    };
+    detachSubjectFromSemester = (e) => {
+        const semesterId=e.currentTarget.className.split(' ')[3];
+        const data = {
+            yearId: this.props.yearId,
+            classroomId: this.props.classroomId,
+            semesterId: semesterId,
+            subjectId: e.currentTarget.id
+        };
+        setTimeout(() => {
+            console.log(data);
+            this.props.detachSubjectToSemester(data);
+        }, 0);
         this.handleClose(e);
     };
     handleClose = (e) => {
+        this.checkedSubjects = new Set();
         this.setState({showModal: false});
     };
 
@@ -69,7 +88,14 @@ class ClassroomSubjects extends Component {
                                 </span>
                             </h4>
                             {relatedSubjects.filter(subject => subject.semester_id == semester.id).map((subject, index) => (
-                                <h4 key={subject.id}>{index + 1} - {subject.name}</h4>
+                                <div key={subject.id}>
+                                    {index + 1} - {subject.name}
+                                    <button className={"btn btn-danger detachSubjectFromSemester " + semester.id}
+                                            id={subject.id}
+                                            onClick={this.detachSubjectFromSemester}>
+                                        <span className="glyphicon glyphicon-minus"></span>
+                                    </button>
+                                </div>
                             ))}
                         </div>
                     ))}
@@ -88,7 +114,8 @@ class ClassroomSubjects extends Component {
                     <Modal.Body>
                         {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).map((subject) => (
                             <div key={subject.id}>
-                                <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox" name="subjects" value={subject.id}/>
+                                <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox" name="subjects"
+                                       value={subject.id}/>
                                 <label>{subject.name}</label>
                             </div>
                         ))}
@@ -113,5 +140,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getSubjects, attachSubjectToSemester}
+    {getSubjects, attachSubjectToSemester, detachSubjectToSemester}
 )(ClassroomSubjects);
