@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_YEARS, GET_RELATED_FILTER_DATA,
-    GET_CLASROOM_RELATIONS_DATA, GET_RELATED_SEMESTER, GET_RELATED_SUBJECTS, ATTACH_SUBJECT_TO_SEMESTER,DETACH_SUBJECT_TO_SEMESTER
+    GET_CLASROOM_RELATIONS_DATA, GET_RELATED_SEMESTER, GET_RELATED_SUBJECTS, ATTACH_SUBJECT_TO_SEMESTER,DETACH_SUBJECT_FROM_SEMESTER
 } from "./types"
 
 export const getClassrooms = (numberPerPage = 10) => dispatch => {
@@ -71,7 +71,7 @@ export const attachSubjectToSemester = (data) => dispatch => {
 export const detachSubjectToSemester = (data) => dispatch => {
     axios.post('http://localhost:8000/api/classroom/detachSubjectToSemester', data).then(res =>
         dispatch({
-            type: DETACH_SUBJECT_TO_SEMESTER,
+            type: DETACH_SUBJECT_FROM_SEMESTER,
             payload: res.data.data
         })
     );

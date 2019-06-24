@@ -47,7 +47,7 @@ class ClassroomSubjects extends Component {
         this.handleClose(e);
     };
     detachSubjectFromSemester = (e) => {
-        const semesterId=e.currentTarget.className.split(' ')[3];
+        const semesterId = e.currentTarget.className.split(' ')[3];
         const data = {
             yearId: this.props.yearId,
             classroomId: this.props.classroomId,
@@ -55,7 +55,6 @@ class ClassroomSubjects extends Component {
             subjectId: e.currentTarget.id
         };
         setTimeout(() => {
-            console.log(data);
             this.props.detachSubjectToSemester(data);
         }, 0);
         this.handleClose(e);
@@ -68,6 +67,9 @@ class ClassroomSubjects extends Component {
     handleShow = (e) => {
         const semesterId = e.currentTarget.id;
         this.setState({showModal: true, semesterId: semesterId});
+    };
+    selectAll = (e) => {
+
     };
 
     render() {
@@ -112,13 +114,21 @@ class ClassroomSubjects extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).map((subject) => (
-                            <div key={subject.id}>
-                                <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox" name="subjects"
-                                       value={subject.id}/>
-                                <label>{subject.name}</label>
-                            </div>
-                        ))}
+                        {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).length > 0 ?
+                            <div>
+                                <input onChange={this.selectAll} type="checkbox" name="subjects"
+                                       value=""/>
+                                <label>select all</label>
+                            </div> : ''
+                        }
+                        {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).length > 0 ?
+                            subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).map((subject) => (
+                                <div key={subject.id}>
+                                    <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox" name="subjects"
+                                           value={subject.id}/>
+                                    <label>{subject.name}</label>
+                                </div>
+                            )) : <div>Sorry, all subjects is assigned or there is no available subject</div>}
                     </Modal.Body>
                     <Modal.Footer>
                         <button className="btn btn-primary" onClick={this.attachSubjectToSemester}>
