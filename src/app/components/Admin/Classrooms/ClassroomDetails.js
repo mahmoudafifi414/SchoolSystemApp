@@ -74,7 +74,7 @@ class ClassroomDetails extends Component {
         }));
         if (selectedOption == 'Subjects') {
             this.props.getRelatedSubjects(this.state.data.classroomId, this.state.data.yearId);
-        }else {
+        } else {
             setTimeout(function () {
                 that.props.getRelatedFilterData(that.state.data)
             }, 0)
@@ -94,7 +94,7 @@ class ClassroomDetails extends Component {
         }
         if (selectedOption == 'Subjects') {
             this.props.getRelatedSubjects(this.state.data.classroomId, this.state.data.yearId);
-        }else {
+        } else {
             setTimeout(function () {
                 that.props.getRelatedFilterData(that.state.data)
             }, 0)

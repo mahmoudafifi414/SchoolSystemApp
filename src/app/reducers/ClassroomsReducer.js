@@ -7,7 +7,8 @@ import {
     GET_RELATED_SEMESTER,
     GET_RELATED_SUBJECTS,
     ATTACH_SUBJECT_TO_SEMESTER,
-    DETACH_SUBJECT_FROM_SEMESTER, DETACH_CLASSROOM_FROM_YEAR
+    DETACH_SUBJECT_FROM_SEMESTER, DETACH_CLASSROOM_FROM_YEAR,
+    DETACH_TEACHER_FROM_CLASSROOM
 } from "../actions/types"
 import update from "react-addons-update";
 
@@ -71,6 +72,14 @@ export default function (state = initialState, action) {
                 relatedSubjects: state.relatedSubjects.filter(subject =>
                     subject.id != action.payload.subjectId || subject.semester_id != action.payload.semesterId)
             };
+        case DETACH_TEACHER_FROM_CLASSROOM:
+            return update(state, {
+                filteredData: {
+                    tableData: {
+                        $set: state.filteredData.tableData.filter(data => data.Id != action.payload.teacherId)
+                    }
+                }
+            });
         default:
             return state;
     }

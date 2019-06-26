@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getRelatedFilterData} from '../../../actions/ClassroomsActions'
+import {getRelatedFilterData, detachTeacherFromClassroom} from '../../../actions/ClassroomsActions'
 
 class FilterDisplayBuilder extends Component {
     constructor(props) {
@@ -10,6 +10,15 @@ class FilterDisplayBuilder extends Component {
     componentDidMount = () => {
         const data = this.props.data;
         this.props.getRelatedFilterData(data)
+    };
+    detachTeacherFromClassroom = (e) => {
+        const teacherId = e.currentTarget.id.split('_')[1];
+        const params = {
+            yearId: this.props.data.yearId,
+            classroomId: this.props.data.classroomId,
+            teacherId: teacherId
+        };
+        this.props.detachTeacherFromClassroom(params);
     };
 
     render() {
@@ -32,7 +41,14 @@ class FilterDisplayBuilder extends Component {
                             filteredData.tableData.map((data) => (
                                 <tr key={data[0]}>
                                     {filteredData.tableColumns.map((col) => (
-                                        <td key={data[col]} scope="col">{data[col]}</td>
+                                        col != 'Action' ?
+                                            <td key={data[col]} scope="col">{data[col]}</td>
+                                            : <td>
+                                                <button id={'edit_' + data['Id']} className="btn btn-primary">Edit</button>
+                                                <button onClick={this.detachTeacherFromClassroom}
+                                                        id={'detach_' + data['Id']} className="btn btn-primary">detach
+                                                </button>
+                                            </td>
                                     ))}
                                 </tr>
                             ))
@@ -61,5 +77,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-    {getRelatedFilterData})
+    {getRelatedFilterData, detachTeacherFromClassroom})
 (FilterDisplayBuilder);
