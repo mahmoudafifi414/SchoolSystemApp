@@ -76,8 +76,17 @@ export default function (state = initialState, action) {
         case DETACH_TEACHER_FROM_CLASSROOM:
             const teacherSemesterIds = state.filteredData.tableData.filter(data => data.Id == action.payload.teacherId)[0].SemesterIds.split(',');
             const teacherSemesters = state.filteredData.tableData.filter(data => data.Id == action.payload.teacherId)[0].Semester.split(',');
-            if (action.payload.semesterIds.length > 0) {
+            if (action.payload.semesterIds && action.payload.semesterIds.length > 0) {
                 const diffIds = arr_diff(teacherSemesterIds, action.payload.semesterIds).toString();
+                if (!diffIds){
+                    return update(state, {
+                        filteredData: {
+                            tableData: {
+                                $set: state.filteredData.tableData.filter(data => data.Id != action.payload.teacherId)
+                            }
+                        }
+                    });
+                }
                 const diff = arr_diff(teacherSemesters, action.payload.semesters).toString();
                 console.log(diff);
                 return update(state, {
@@ -94,14 +103,13 @@ export default function (state = initialState, action) {
                     }
                 });
             }
-
-        /*return update(state, {
-            filteredData: {
-                tableData: {
-                    $set: state.filteredData.tableData.filter(data => data.Id != action.payload.teacherId)
+            return update(state, {
+                filteredData: {
+                    tableData: {
+                        $set: state.filteredData.tableData.filter(data => data.Id != action.payload.teacherId)
+                    }
                 }
-            }
-        });*/
+            });
         default:
             return state;
     }
