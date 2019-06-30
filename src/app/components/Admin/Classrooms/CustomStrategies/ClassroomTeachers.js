@@ -2,17 +2,20 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Modal} from 'react-bootstrap'
 import {detachTeacherFromClassroom} from "../../../../actions/ClassroomsActions";
+
 class ClassroomTeachers extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showModal: false,
             teacherSemesters: [],
+            teacherSemestersIds: [],
             currentTeacher: ''
         };
     }
 
     componentDidMount = () => {
+        this.checkedTeacherSemestersIds = new Set();
         this.checkedTeacherSemesters = new Set();
     };
 
@@ -23,26 +26,28 @@ class ClassroomTeachers extends Component {
             classroomId: this.props.data.classroomId,
             teacherId: teacherId
         };
-        if (e.currentTarget.id.split('_')[0] === 'save' && [...this.checkedTeacherSemesters].length > 0) {
+        if (e.currentTarget.id.split('_')[0] === 'save' && [...this.checkedTeacherSemestersIds].length > 0) {
+            params.semesterIds = [...this.checkedTeacherSemestersIds];
             params.semesters = [...this.checkedTeacherSemesters];
-            console.log(params);
-            //this.props.detachTeacherFromClassroom(params);
+            this.props.detachTeacherFromClassroom(params);
             this.handleClose(e);
-        } else if (e.currentTarget.id.split('_')[0] === 'save' && [...this.checkedTeacherSemesters].length == 0) {
+        } else if (e.currentTarget.id.split('_')[0] === 'save' && [...this.checkedTeacherSemestersIds].length == 0) {
             alert('Please select at least one semester to detach');
         } else if (e.currentTarget.id.split('_')[0] === 'detach') {
-            console.log(params);
-            //this.props.detachTeacherFromClassroom(params);
+            this.props.detachTeacherFromClassroom(params);
         }
     };
     handleChangedTeacherSemestersCheckbox = (e) => {
-        if (this.checkedTeacherSemesters.has(e.currentTarget.value)) {
-            this.checkedTeacherSemesters.delete(e.currentTarget.value);
+        if (this.checkedTeacherSemestersIds.has(e.currentTarget.value)) {
+            this.checkedTeacherSemestersIds.delete(e.currentTarget.value);
+            this.checkedTeacherSemesters.delete(e.currentTarget.className);
         } else {
-            this.checkedTeacherSemesters.add(e.currentTarget.value);
+            this.checkedTeacherSemestersIds.add(e.currentTarget.value);
+            this.checkedTeacherSemesters.add(e.currentTarget.className);
         }
     };
     handleClose = (e) => {
+        this.checkedTeacherSemestersIds = new Set();
         this.checkedTeacherSemesters = new Set();
         this.setState({showModal: false});
     };
@@ -50,7 +55,13 @@ class ClassroomTeachers extends Component {
     handleShow = (e) => {
         const teacherId = e.currentTarget.id.split('_')[1];
         const teacherSemesters = this.props.filteredData.tableData.filter(teacher => teacher.Id == teacherId)[0].Semester.split(',');
-        this.setState({showModal: true, teacherSemesters: teacherSemesters, currentTeacher: teacherId});
+        const teacherSemestersIds = this.props.filteredData.tableData.filter(teacher => teacher.Id == teacherId)[0].SemesterIds.split(',');
+        this.setState({
+            showModal: true,
+            teacherSemesters: teacherSemesters,
+            teacherSemestersIds: teacherSemestersIds,
+            currentTeacher: teacherId
+        });
     };
 
     render() {
@@ -67,12 +78,12 @@ class ClassroomTeachers extends Component {
                         </thead>
                         <tbody>
                         {this.props.filteredData.tableData.length > 0 ?
-                            this.props.filteredData.tableData.map((data) => (
-                                <tr key={data[0]}>
+                            this.props.filteredData.tableData.map((data, index) => (
+                                <tr key={data['Id'] + data['Name']}>
                                     {this.props.filteredData.tableColumns.map((col) => (
                                         col != 'Action' ?
-                                            <td key={data[col]} scope="col">{data[col]}</td>
-                                            : <td key={data['id']}>
+                                            <td key={data['Id'] + data[col]} scope="col">{data[col]}</td>
+                                            : <td key={data['Id'] + '_Action'}>
                                                 <button onClick={this.handleShow} id={'edit_' + data['Id']}
                                                         className="btn btn-primary">Edit
                                                 </button>
@@ -108,11 +119,12 @@ class ClassroomTeachers extends Component {
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {this.state.teacherSemesters.map((semester) => (
+                            {this.state.teacherSemesters.map((semester, index) => (
                                 <div key={semester}>
                                     <input onChange={this.handleChangedTeacherSemestersCheckbox} type="checkbox"
                                            name="teacherSemesters"
-                                           value={semester}/>
+                                           className={semester}
+                                           value={this.state.teacherSemestersIds[index]}/>
                                     <label>{semester}</label>
                                 </div>
                             ))}
