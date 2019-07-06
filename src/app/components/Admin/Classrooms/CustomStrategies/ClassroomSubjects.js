@@ -68,9 +68,6 @@ class ClassroomSubjects extends Component {
         const semesterId = e.currentTarget.id;
         this.setState({showModal: true, semesterId: semesterId});
     };
-    selectAll = (e) => {
-
-    };
 
     render() {
         const {relatedSubjects} = this.props.ClassroomsReducer;
@@ -78,29 +75,41 @@ class ClassroomSubjects extends Component {
         return (
             <div>
                 <h1>Subjects</h1>
-                <div className="row row-divided">
-                    {this.props.relatedSemesters.map((semester) => (
-                        <div key={semester.id}
-                             className={"col-xs-" + Math.floor(12 / this.props.relatedSemesters.length) + " column-th"}>
-                            <h4>{semester.name}
-                                <span className="buttonSpan">
-                                    <button onClick={this.handleShow} id={semester.id} className="btn btn-default"> Add
-                                        Subject
-                                    </button>
-                                </span>
-                            </h4>
-                            {relatedSubjects.filter(subject => subject.semester_id == semester.id).map((subject, index) => (
-                                <div key={subject.id}>
-                                    {index + 1} - {subject.name}
-                                    <button className={"btn btn-danger detachSubjectFromSemester " + semester.id}
-                                            id={subject.id}
-                                            onClick={this.detachSubjectFromSemester}>
-                                        <span className="glyphicon glyphicon-minus"></span>
-                                    </button>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="row">
+                            {this.props.relatedSemesters.map((semester) => (
+                                <div className={"col-md-" + Math.floor(12 / this.props.relatedSemesters.length)}>
+                                    <div className="list-group">
+                                        <h3
+                                           className="list-group-item list-group-item-action active justify-content-between">{semester.name}
+                                            <button style={{float: 'right', height: 30}} onClick={this.handleShow}
+                                                    id={semester.id}
+                                                    className="btn btn-default">
+                                                <span className="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </h3>
+                                        {relatedSubjects.filter(subject => subject.semester_id == semester.id).map((subject, index) => (
+                                            <div key={subject.id} className="list-group-item">
+                                                <button style={{float: 'right'}}
+                                                        className={"btn btn-danger detachSubjectFromSemester " + semester.id}
+                                                        id={subject.id}
+                                                        onClick={this.detachSubjectFromSemester}>
+                                                    <span className="glyphicon glyphicon-minus"></span>
+                                                </button>
+                                                <h4 className="list-group-item-heading">
+                                                    {index + 1} - {subject.name}
+                                                </h4>
+                                                <p className="list-group-item-text">
+                                                    teacher:
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                    ))}
+                    </div>
                 </div>
                 <Modal
                     show={this.state.showModal}
@@ -115,16 +124,10 @@ class ClassroomSubjects extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).length > 0 ?
-                            <div>
-                                <input onChange={this.selectAll} type="checkbox" name="subjects"
-                                       value=""/>
-                                <label>select all</label>
-                            </div> : ''
-                        }
-                        {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).length > 0 ?
                             subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).map((subject) => (
                                 <div key={subject.id}>
-                                    <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox" name="subjects"
+                                    <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox"
+                                           name="subjects"
                                            value={subject.id}/>
                                     <label>{subject.name}</label>
                                 </div>
