@@ -123,6 +123,7 @@ class ClassroomSubjects extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+
                         {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).length > 0 ?
                             subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).map((subject) => (
                                 <div key={subject.id}>
