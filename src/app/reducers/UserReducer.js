@@ -7,7 +7,8 @@ import {
     LOGOUT,
     REGISTER,
     UPDATE_AUTH_USER_INFO,
-    ADD_NEW_USER
+    ADD_NEW_USER,
+    GET_ALL_TEACHERS
 } from '../actions/types';
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
     email: '',
     usersOfSameNetwork: [],
     dataToAddUser: [],
-    dataToEditUser: []
+    dataToEditUser: [],
+    allTeachers: []
 };
 
 export default function (state = initialState, action) {
@@ -66,6 +68,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 dataToEditUser: action.payload
+            };
+        case GET_ALL_TEACHERS:
+            return {
+                ...state,
+                allTeachers: action.payload
             };
         case ADD_NEW_USER:
             return state;

@@ -97,9 +97,12 @@ class SideList extends Component {
                                         <div id="dropdown-lvl5" className="panel-collapse collapse">
                                             <div className="panel-body">
                                                 <ul className="nav navbar-nav">
-                                                    <li><a href="#" onClick={this.props.getLinkNameInSideNavigation}>All
+                                                    <li><a href="#" onClick={this.getLinkNameInSideNavigation}>All
                                                         Subjects</a></li>
                                                     <li><a href="#">Add Subject</a></li>
+                                                    <li><a href="#" id="assign_subject_teacher"
+                                                           onClick={this.getLinkNameInSideNavigation}>
+                                                        Assign Teacher</a></li>
                                                 </ul>
                                             </div>
                                         </div>

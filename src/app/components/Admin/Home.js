@@ -12,6 +12,7 @@ import YearSemester from "./Years/YearSemester";
 import AddEditYear from "./Years/AddEditYear";
 import AddEditSemester from "./Semesters/AddEditSemester";
 import AllSemesters from "./Semesters/AllSemesters";
+import SubjectTeacher from "./Subjects/SubjectTeacher";
 
 
 class Home extends Component {
@@ -24,10 +25,11 @@ class Home extends Component {
             AllClassrooms: AllClassrooms,
             ClassroomDetails: ClassroomDetails,
             YearSemester: YearSemester,
-            AddEditYear:AddEditYear,
-            AddEditSemester:AddEditSemester,
-            AllSemesters:AllSemesters,
-            ClassroomInfoPage:ClassroomInfoPage
+            AddEditYear: AddEditYear,
+            AddEditSemester: AddEditSemester,
+            AllSemesters: AllSemesters,
+            ClassroomInfoPage: ClassroomInfoPage,
+            SubjectTeacher: SubjectTeacher
         };
         const {componentToRender} = this.props.ComponentRendererReducer;
         const Component = Components[componentToRender];

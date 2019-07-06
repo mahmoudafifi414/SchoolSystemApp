@@ -7,7 +7,8 @@ import {
     LOGIN,
     LOGOUT,
     REGISTER,
-    UPDATE_AUTH_USER_INFO
+    UPDATE_AUTH_USER_INFO,
+    GET_ALL_TEACHERS
 } from './types';
 
 export const loginAction = loginInfo => dispatch => {
@@ -85,7 +86,7 @@ export const getDataForEditUser = (userId) => dispatch => {
             payload: res.data
         })
     )
-}
+};
 export const addNewUser = (newUserData) => dispatch => {
     axios.post('http://127.0.0.1:8000/api/user', newUserData).then(res => {
             /*dispatch({
@@ -95,13 +96,21 @@ export const addNewUser = (newUserData) => dispatch => {
             console.log(res);
         }
     )
-}
+};
+export const getAllTeachers = () => dispatch => {
+    axios.get('http://127.0.0.1:8000/api/teacher').then(res =>
+        dispatch({
+            type: GET_ALL_TEACHERS,
+            payload: res.data.teachers
+        })
+    )
+};
 export const logoutAction = () => dispatch => {
-    localStorage.removeItem('user-id')
-    localStorage.removeItem('user-token')
-    localStorage.removeItem('user-refresh-token')
-    localStorage.removeItem('user-email')
-    localStorage.removeItem('user-name')
+    localStorage.removeItem('user-id');
+    localStorage.removeItem('user-token');
+    localStorage.removeItem('user-refresh-token');
+    localStorage.removeItem('user-email');
+    localStorage.removeItem('user-name');
     dispatch({
         type: LOGOUT,
         payload: ''
