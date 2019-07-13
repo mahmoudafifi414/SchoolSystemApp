@@ -1,4 +1,4 @@
-import {ADD_SUBJECT, GET_ALL_SUBJECTS, GET_SUBJECTS_PAGINATION} from "./types"
+import {ADD_SUBJECT, GET_ALL_SUBJECTS, GET_SUBJECTS_PAGINATION,GET_RELATED_SUBJECT_TEACHERS} from "./types"
 import axios from 'axios'
 
 export const addSubject = (data) => dispatch => {
@@ -22,6 +22,14 @@ export const updatePaginationData = (apiLink, paginationNumber) => dispatch => {
         dispatch({
             type: GET_ALL_SUBJECTS,
             payload: res.data.subjects
+        })
+    );
+};
+export const getRelatedTeachers = (subjectId) => dispatch => {
+    axios.get('http://localhost:8000/api/subject/getRelatedTeachers/' + subjectId).then(res =>
+        dispatch({
+            type: GET_RELATED_SUBJECT_TEACHERS,
+            payload: res.data.relatedTeachers
         })
     );
 };

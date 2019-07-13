@@ -13,7 +13,7 @@ import AddEditYear from "./Years/AddEditYear";
 import AddEditSemester from "./Semesters/AddEditSemester";
 import AllSemesters from "./Semesters/AllSemesters";
 import SubjectTeacher from "./Subjects/SubjectTeacher";
-
+import AddEditSubject from "./Subjects/AddEditSubject"
 
 class Home extends Component {
     render() {
@@ -29,7 +29,8 @@ class Home extends Component {
             AddEditSemester: AddEditSemester,
             AllSemesters: AllSemesters,
             ClassroomInfoPage: ClassroomInfoPage,
-            SubjectTeacher: SubjectTeacher
+            SubjectTeacher: SubjectTeacher,
+            AddEditSubject: AddEditSubject
         };
         const {componentToRender} = this.props.ComponentRendererReducer;
         const Component = Components[componentToRender];

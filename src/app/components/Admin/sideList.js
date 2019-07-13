@@ -99,7 +99,9 @@ class SideList extends Component {
                                                 <ul className="nav navbar-nav">
                                                     <li><a href="#" onClick={this.getLinkNameInSideNavigation}>All
                                                         Subjects</a></li>
-                                                    <li><a href="#">Add Subject</a></li>
+                                                    <li><a href="#" id="add_edit_subject"
+                                                           onClick={this.getLinkNameInSideNavigation}>Add Subject</a>
+                                                    </li>
                                                     <li><a href="#" id="assign_subject_teacher"
                                                            onClick={this.getLinkNameInSideNavigation}>
                                                         Assign Teacher</a></li>

@@ -8,6 +8,13 @@ export const compareArrayDiff = (arr, semesterId) => {
         }).length == 0;
     }
 };
+export const compareArrayDiffGeneric = (arr) => {
+    return (current) => {
+        return arr.filter((other) => {
+            return other.id == current.id;
+        }).length == 0;
+    }
+};
 export const arr_diff = (a1, a2) => {
 
     let a = [], diff = [];

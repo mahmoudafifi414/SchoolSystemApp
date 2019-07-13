@@ -1,8 +1,9 @@
-import {ADD_SUBJECT, GET_ALL_SUBJECTS, GET_SUBJECTS_PAGINATION} from '../actions/types';
+import {ADD_SUBJECT, GET_ALL_SUBJECTS, GET_SUBJECTS_PAGINATION, GET_RELATED_SUBJECT_TEACHERS} from '../actions/types';
 
 const initialState = {
     subjects: [],
     subjectsPagination: [],
+    relatedTeachers: [],
     msg: ''
 };
 
@@ -22,6 +23,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 msg: action.payload
+            };
+        case GET_RELATED_SUBJECT_TEACHERS:
+            return {
+                ...state,
+                relatedTeachers: action.payload
             };
         default:
             return state;

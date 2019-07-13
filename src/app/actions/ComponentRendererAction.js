@@ -52,8 +52,11 @@ export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch
         case 'add_edit_year':
             componentToRender = 'AddEditYear';
             break;
-        case 'add_edit_year':
+        case 'add_edit_semester':
             componentToRender = 'AddEditSemester';
+            break;
+        case 'add_edit_subject':
+            componentToRender = 'AddEditSubject';
             break;
         case 'assign_subject_teacher':
             componentToRender = 'SubjectTeacher';
