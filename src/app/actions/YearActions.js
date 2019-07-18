@@ -32,7 +32,7 @@ export const updatePaginationData = (apiLink, paginationNumber) => dispatch => {
     axios.get(apiLink + '?page=' + paginationNumber).then(res =>
         dispatch({
             type: GET_ALL_YEARS_PAGINATION,
-            payload: res.data.semesters
+            payload: res.data.years
         })
     );
 };

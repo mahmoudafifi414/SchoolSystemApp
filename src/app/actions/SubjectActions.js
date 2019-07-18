@@ -1,4 +1,10 @@
-import {ADD_SUBJECT, GET_ALL_SUBJECTS, GET_SUBJECTS_PAGINATION,GET_RELATED_SUBJECT_TEACHERS} from "./types"
+import {
+    ADD_SUBJECT,
+    GET_ALL_SUBJECTS,
+    GET_SUBJECTS_PAGINATION,
+    GET_RELATED_SUBJECT_TEACHERS,
+    APPLY_TEACHERS_TO_SUBJECT, GET_YEAR_RELATIONS_DATA, GET_SUBJECT_RELATIONS_DATA
+} from "./types"
 import axios from 'axios'
 
 export const addSubject = (data) => dispatch => {
@@ -25,11 +31,27 @@ export const updatePaginationData = (apiLink, paginationNumber) => dispatch => {
         })
     );
 };
+export const getRelationData = (subjectId) => dispatch => {
+    axios.get('http://localhost:8000/api/subject/get-relations-data/' + subjectId).then(res =>
+        dispatch({
+            type: GET_SUBJECT_RELATIONS_DATA,
+            payload: res.data
+        })
+    );
+};
 export const getRelatedTeachers = (subjectId) => dispatch => {
     axios.get('http://localhost:8000/api/subject/getRelatedTeachers/' + subjectId).then(res =>
         dispatch({
             type: GET_RELATED_SUBJECT_TEACHERS,
             payload: res.data.relatedTeachers
+        })
+    );
+};
+export const applyTeacherToSubject = (subjectId, teachers) => dispatch => {
+    axios.post('http://localhost:8000/api/subject/applyTeachersToSubject/' + subjectId, teachers).then(res =>
+        dispatch({
+            type: APPLY_TEACHERS_TO_SUBJECT,
+            payload: res.data.msg
         })
     );
 };

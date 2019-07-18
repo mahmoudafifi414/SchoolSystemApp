@@ -23,6 +23,7 @@ class AllYears extends Component {
 
     render() {
         const {yearsPagination} = this.props.YearsReducer;
+        console.log(yearsPagination)
         if (typeof yearsPagination.data !== 'undefined') {
             return (
                 <div>

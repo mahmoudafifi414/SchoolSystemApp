@@ -1,10 +1,18 @@
-import {ADD_SUBJECT, GET_ALL_SUBJECTS, GET_SUBJECTS_PAGINATION, GET_RELATED_SUBJECT_TEACHERS} from '../actions/types';
+import {
+    ADD_SUBJECT,
+    GET_ALL_SUBJECTS,
+    GET_SUBJECTS_PAGINATION,
+    GET_RELATED_SUBJECT_TEACHERS,
+    APPLY_TEACHERS_TO_SUBJECT, GET_YEAR_RELATIONS_DATA, GET_SUBJECT_RELATIONS_DATA
+} from '../actions/types';
 
 const initialState = {
     subjects: [],
+    relationsData: [],
     subjectsPagination: [],
     relatedTeachers: [],
-    msg: ''
+    msg: '',
+    assignedMsg: ''
 };
 
 export default function (state = initialState, action) {
@@ -19,6 +27,11 @@ export default function (state = initialState, action) {
                 ...state,
                 subjects: action.payload
             };
+        case GET_SUBJECT_RELATIONS_DATA:
+            return {
+                ...state,
+                relationsData: action.payload
+            };
         case ADD_SUBJECT:
             return {
                 ...state,
@@ -28,6 +41,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 relatedTeachers: action.payload
+            };
+        case APPLY_TEACHERS_TO_SUBJECT:
+            return {
+                ...state,
+                assignedMsg: action.payload
             };
         default:
             return state;

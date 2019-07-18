@@ -4,7 +4,9 @@ export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch
     let componentToRender = '';
     let componentMetaData = 0;
     let yearId = 0;
+    let subjectId = 0;
     let classroomId = 0;
+    let subjectTeachersId = 0;
     switch (elementId) {
         case 'all_users':
             componentToRender = 'AllUsers';
@@ -55,11 +57,25 @@ export const getLinkNameInSideNavigation = (elementId, elementClass) => dispatch
         case 'add_edit_semester':
             componentToRender = 'AddEditSemester';
             break;
+        case 'all_subjects':
+            componentToRender = 'AllSubjects';
+            break;
         case 'add_edit_subject':
             componentToRender = 'AddEditSubject';
             break;
         case 'assign_subject_teacher':
             componentToRender = 'SubjectTeacher';
+            componentMetaData = '';
+            break;
+        case 'subject_teachers':
+            componentToRender = 'SubjectTeacher';
+            subjectTeachersId = elementClass.split(' ')[2];
+            componentMetaData = subjectTeachersId;
+            break;
+        case 'subject_info':
+            subjectId = elementClass.split(' ')[2];
+            componentToRender = 'SubjectInfoPage';
+            componentMetaData = subjectId;
             break;
         default:
             componentToRender = 'InfoPage';
