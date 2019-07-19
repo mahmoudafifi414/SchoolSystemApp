@@ -112,7 +112,7 @@ class SubjectTeacher extends Component {
                                             className="form-control" onChange={this.handleSubjectSelection}>
                                         <option></option>
                                         {subjects.map((subject, index) => (
-                                            <option key={subject.id}
+                                            <option  key={subject.id}
                                                     value={subject.id}>
                                                 {subject.name}
                                             </option>

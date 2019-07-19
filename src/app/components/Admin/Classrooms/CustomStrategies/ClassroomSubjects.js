@@ -10,7 +10,8 @@ import {
 } from "../../../../Helpers";
 import {
     attachSubjectToSemester,
-    detachSubjectToSemester
+    detachSubjectToSemester,
+    getAvailableSubjectsWithTeachers
 } from "../../../../actions/ClassroomsActions";
 
 class ClassroomSubjects extends Component {
@@ -63,7 +64,15 @@ class ClassroomSubjects extends Component {
         this.checkedSubjects = new Set();
         this.setState({showModal: false});
     };
-
+    getAvailableSubjectsWithTeachers = (e) => {
+        const data = {
+            yearId: this.props.yearId,
+            classroomId: this.props.classroomId,
+            semesterId: this.state.semesterId
+        };
+        this.props.getAvailableSubjectsWithTeachers(data);
+        this.handleShow(e);
+    };
     handleShow = (e) => {
         const semesterId = e.currentTarget.id;
         this.setState({showModal: true, semesterId: semesterId});
@@ -72,6 +81,7 @@ class ClassroomSubjects extends Component {
     render() {
         const {relatedSubjects} = this.props.ClassroomsReducer;
         const {subjects} = this.props.SubjectReducer;
+        const {availableSubjectsWithTeachers} = this.props.ClassroomsReducer;
         return (
             <div>
                 <h1>Subjects</h1>
@@ -82,8 +92,9 @@ class ClassroomSubjects extends Component {
                                 <div className={"col-md-" + Math.floor(12 / this.props.relatedSemesters.length)}>
                                     <div className="list-group">
                                         <h3
-                                           className="list-group-item list-group-item-action active justify-content-between">{semester.name}
-                                            <button style={{float: 'right', height: 30}} onClick={this.handleShow}
+                                            className="list-group-item list-group-item-action active justify-content-between">{semester.name}
+                                            <button style={{float: 'right', height: 30}}
+                                                    onClick={this.getAvailableSubjectsWithTeachers}
                                                     id={semester.id}
                                                     className="btn btn-default">
                                                 <span className="glyphicon glyphicon-plus"></span>
@@ -123,14 +134,25 @@ class ClassroomSubjects extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-
-                        {subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).length > 0 ?
-                            subjects.filter(compareArrayDiff(relatedSubjects, this.state.semesterId)).map((subject) => (
-                                <div key={subject.id}>
-                                    <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox"
-                                           name="subjects"
-                                           value={subject.id}/>
-                                    <label>{subject.name}</label>
+                        {availableSubjectsWithTeachers.length > 0 ?
+                            availableSubjectsWithTeachers.map((subject) => (
+                                <div className={"row"}>
+                                    <div className={"col-md-12"}>
+                                        <div className={"col-md-6"} key={subject.id}>
+                                            <input onChange={this.handleChangedSubjectsCheckbox} type="checkbox"
+                                                   name="subjects"
+                                                   value={subject.id}/>
+                                            <label>{subject.name}</label>
+                                        </div>
+                                        <div className={"col-md-6"}>
+                                            <select multiple={true} className={"form-control"}>
+                                                <option></option>
+                                                {subject.teachers.map((teacher) => (
+                                                    <option value={teacher.id}>{teacher.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             )) : <div>Sorry, all subjects is assigned or there is no available subject</div>}
                     </Modal.Body>
@@ -154,5 +176,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getSubjects, attachSubjectToSemester, detachSubjectToSemester}
+    {getSubjects, attachSubjectToSemester, detachSubjectToSemester, getAvailableSubjectsWithTeachers}
 )(ClassroomSubjects);

@@ -8,7 +8,7 @@ import {
     GET_RELATED_SUBJECTS,
     ATTACH_SUBJECT_TO_SEMESTER,
     DETACH_SUBJECT_FROM_SEMESTER, DETACH_CLASSROOM_FROM_YEAR,
-    DETACH_TEACHER_FROM_CLASSROOM
+    DETACH_TEACHER_FROM_CLASSROOM, GET_AVAILABLE_SUBJECTS_TEACHERS
 } from "../actions/types"
 import update from "react-addons-update";
 import {arr_diff} from "../Helpers";
@@ -20,7 +20,8 @@ const initialState = {
     relatedSemesters: [],
     relatedSubjects: [],
     filteredData: [],
-    relationsData: []
+    relationsData: [],
+    availableSubjectsWithTeachers: []
 };
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -67,6 +68,11 @@ export default function (state = initialState, action) {
                         : typeof action.payload.length !== 'undefined' ? [...action.payload] : []
                 }
             });
+        case GET_AVAILABLE_SUBJECTS_TEACHERS:
+            return {
+                ...state,
+                availableSubjectsWithTeachers: action.payload
+            };
         case DETACH_SUBJECT_FROM_SEMESTER:
             return {
                 ...state,
@@ -78,7 +84,7 @@ export default function (state = initialState, action) {
             const teacherSemesters = state.filteredData.tableData.filter(data => data.Id == action.payload.teacherId)[0].Semester.split(',');
             if (action.payload.semesterIds && action.payload.semesterIds.length > 0) {
                 const diffIds = arr_diff(teacherSemesterIds, action.payload.semesterIds).toString();
-                if (!diffIds){
+                if (!diffIds) {
                     return update(state, {
                         filteredData: {
                             tableData: {

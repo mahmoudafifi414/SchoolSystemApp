@@ -1,8 +1,16 @@
 import axios from 'axios';
 import {
-    GET_CLASSROOMS, GET_CLASSROOMS_PAGINATION, GET_RELATED_YEARS, GET_RELATED_FILTER_DATA,
-    GET_CLASROOM_RELATIONS_DATA, GET_RELATED_SEMESTER, GET_RELATED_SUBJECTS, ATTACH_SUBJECT_TO_SEMESTER,DETACH_SUBJECT_FROM_SEMESTER,
-    DETACH_TEACHER_FROM_CLASSROOM
+    GET_CLASSROOMS,
+    GET_CLASSROOMS_PAGINATION,
+    GET_RELATED_YEARS,
+    GET_RELATED_FILTER_DATA,
+    GET_CLASROOM_RELATIONS_DATA,
+    GET_RELATED_SEMESTER,
+    GET_RELATED_SUBJECTS,
+    ATTACH_SUBJECT_TO_SEMESTER,
+    DETACH_SUBJECT_FROM_SEMESTER,
+    DETACH_TEACHER_FROM_CLASSROOM,
+    GET_AVAILABLE_SUBJECTS_TEACHERS
 } from "./types"
 
 export const getClassrooms = (numberPerPage = 10) => dispatch => {
@@ -73,6 +81,14 @@ export const detachSubjectToSemester = (data) => dispatch => {
     axios.post('http://localhost:8000/api/classroom/detachSubjectToSemester', data).then(res =>
         dispatch({
             type: DETACH_SUBJECT_FROM_SEMESTER,
+            payload: res.data.data
+        })
+    );
+};
+export const getAvailableSubjectsWithTeachers = (data) => dispatch => {
+    axios.post('http://localhost:8000/api/classroom/available-subjects-with-teachers', data).then(res =>
+        dispatch({
+            type: GET_AVAILABLE_SUBJECTS_TEACHERS,
             payload: res.data.data
         })
     );
